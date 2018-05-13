@@ -1,0 +1,20 @@
+#login
+  h2 ログイン
+  div[style="width: 500px;margin-left: auto; margin-right: auto;margin-top: 100px;"]
+    - unless flash[:notice].nil?
+      .panel
+          = flash[:notice]
+    = form_for :admin, url: admin_registration_path, class: 'std-form' do |f|
+      .field
+        = f.label :username, "ログインID"
+        = f.text_field :username, autofocus: true, autocomplete: "username", class: "no-ime"
+      .field
+        = f.label :password, "パスワード"
+        = f.password_field :password, autocomplete: "off", class: "no-ime"
+      - if devise_mapping.rememberable? -%>
+        .field
+          = f.check_box :remember_me
+          = f.label :remember_me
+      footer
+        .actions
+          = f.submit "ログイン", class: "btn"

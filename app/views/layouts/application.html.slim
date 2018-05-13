@@ -1,0 +1,65 @@
+doctype html
+html
+  head
+    meta[http-equiv="Content-Type" content="text/html; charset=UTF-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"]
+    meta[name="robots" content="nofollow"]
+    title
+      | TopConnect
+    = csrf_meta_tags
+    = stylesheet_link_tag    'https://fonts.googleapis.com/icon?family=Material+Icons'
+    = stylesheet_link_tag    'application', media: 'all'
+  body
+    nav.white[role="navigation"]
+      .nav-wrapper.container
+        - if admin_signed_in?
+          = link_to 'TopConnect', customers_path, id: 'logo-container', class: 'brand-logo left'
+        - else
+          = link_to 'TopConnect', root_path, id: 'logo-container', class: 'brand-logo left'
+        a.button-collapse.right href="#" data-activates="nav-mobile"
+          | MENU
+        ul.right.hide-on-med-and-down
+          - if admin_signed_in?
+            li
+              = link_to '顧客一覧', customers_path
+            li
+              = link_to '注文一覧', events_path
+            li
+              = link_to 'ログアウト', destroy_admin_session_path, method: :delete
+        ul#nav-mobile.side-nav
+          - if admin_signed_in?
+            li
+              = link_to '顧客一覧', customers_path
+            li
+              = link_to '注文一覧', events_path
+            li
+              = link_to 'ログアウト', destroy_admin_session_path, method: :delete
+    = yield
+    footer.page-footer.teal
+      .container
+        .row
+          .col.l4.s12
+          .col.l6.s12
+            p.grey-text.text-lighten-4
+              | Copyright &copy; 2017 PLATINUM All rights reserved.
+          .col.l2.s12
+    .hiddendiv.common
+    .drag-target[data-sidenav="nav-mobile" style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"]
+    = javascript_include_tag 'application'
+    = yield :javascript
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TopConnectList</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= yield %>
+  </body>
+</html>

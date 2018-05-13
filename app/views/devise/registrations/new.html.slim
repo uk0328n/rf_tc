@@ -1,0 +1,27 @@
+#signup
+  h2 アカウント登録
+  div[style="width: 500px;margin-left: auto; margin-right: auto;margin-top: 100px;"]
+    - unless flash[:notice].nil?
+      .panel
+          = flash[:notice]
+    = form_for :admin, url: admin_registration_path, class: 'std-form' do |f|
+      = devise_error_messages!
+      .field
+        = f.label :username, "ログインID"
+        = f.text_field :username, autofocus: true, autocomplete: "username", class: "no-ime"
+      .field
+        = f.label :password, "パスワード"
+        -if @minimum_password_length
+          | (
+          = @minimum_password_length
+          | characters minimum)
+        br
+        = f.password_field :password, autocomplete: "off", class: "no-ime"
+      .field
+        = f.label :password_confirmation, "確認用パスワード"
+        = f.password_field :password_confirmation, autocomplete: "off", class: "no-ime"
+      footer
+        .actions
+          = f.submit "アカウント作成", class: "btn"
+
+    = render "devise/shared/links"
