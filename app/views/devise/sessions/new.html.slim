@@ -11,7 +11,7 @@
       .field
         = f.label :password, "パスワード"
         = f.password_field :password, autocomplete: "off", class: "no-ime"
-      - if devise_mapping.rememberable? -%>
+      - if devise_mapping.rememberable?
         .field
           = f.check_box :remember_me
           = f.label :remember_me
