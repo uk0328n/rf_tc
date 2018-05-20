@@ -1,0 +1,15 @@
+= form_for @event_detail do |f|
+  - if @event_detail.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@event_detail.errors.count, "error")} prohibited this event_detail from being saved:"
+      ul
+        - @event_detail.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :event_id
+    = f.number_field :event_id
+  .field
+    = f.label :advisor_id
+    = f.number_field :advisor_id
+  .actions = f.submit

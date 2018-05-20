@@ -4,7 +4,8 @@
     - unless flash[:notice].nil?
       .panel
           = flash[:notice]
-    = form_for :admin, url: admin_registration_path, class: 'std-form' do |f|
+    = form_for :admin, url: admin_session_path, class: 'std-form' do |f|
+      = devise_error_messages!
       .field
         = f.label :username, "ログインID"
         = f.text_field :username, autofocus: true, autocomplete: "username", class: "no-ime"
@@ -17,3 +18,4 @@
           = f.label :remember_me
       .actions
         = f.submit "ログイン", class: "btn"
+    = render "devise/shared/links"

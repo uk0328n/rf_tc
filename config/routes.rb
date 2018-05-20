@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :event_details
+  resources :advisors
   get 'top/index'
 
   devise_for :admins, controllers: {

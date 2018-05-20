@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513094923) do
+ActiveRecord::Schema.define(version: 20180520081639) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "customer_id"
     t.integer "event_id"
-    t.integer "attendance"
+    t.integer "attendance_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id", "event_id"], name: "index_activities_on_customer_id_and_event_id", unique: true
   end
 
   create_table "admins", force: :cascade do |t|
@@ -38,18 +39,66 @@ ActiveRecord::Schema.define(version: 20180513094923) do
     t.index ["username"], name: "index_admins_on_username", unique: true
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "advisors", force: :cascade do |t|
     t.string "name"
     t.string "company"
+    t.string "company_short_name"
     t.string "position"
-    t.boolean "is_exective"
+    t.string "postal_code"
+    t.string "address"
+    t.string "tel"
+    t.string "fax"
+    t.string "email"
+    t.string "contact_person_name"
+    t.string "contact_postal_code"
+    t.string "contact_address"
+    t.string "contact_tel"
+    t.string "contact_fax"
+    t.string "contact_email"
+    t.integer "editor_code"
+    t.boolean "is_disable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_advisors_on_name", unique: true
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.integer "rank"
+    t.string "name"
+    t.string "company"
+    t.string "company_short_name"
+    t.string "position"
+    t.string "postal_code"
+    t.string "address"
+    t.string "tel"
+    t.string "fax"
+    t.string "email"
+    t.string "contact_person_name"
+    t.string "contact_postal_code"
+    t.string "contact_address"
+    t.string "contact_tel"
+    t.string "contact_fax"
+    t.string "contact_email"
+    t.integer "editor_code"
+    t.boolean "is_disable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_customers_on_name", unique: true
+  end
+
+  create_table "event_details", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "advisor_id"
+    t.integer "attendance_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["advisor_id", "event_id"], name: "index_event_details_on_advisor_id_and_event_id", unique: true
   end
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.date "event_date"
+    t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

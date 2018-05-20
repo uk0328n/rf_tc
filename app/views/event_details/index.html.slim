@@ -1,0 +1,23 @@
+h1 Listing event_details
+
+table
+  thead
+    tr
+      th Event
+      th Advisor
+      th
+      th
+      th
+
+  tbody
+    - @event_details.each do |event_detail|
+      tr
+        td = event_detail.event_id
+        td = event_detail.advisor_id
+        td = link_to 'Show', event_detail
+        td = link_to 'Edit', edit_event_detail_path(event_detail)
+        td = link_to 'Destroy', event_detail, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Event detail', new_event_detail_path

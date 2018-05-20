@@ -1,0 +1,26 @@
+h2 顧問一覧
+br
+= link_to '新規作成', new_advisor_path, class: 'btn btn-default btn-sm', role: 'button'
+br
+br
+table.table.table-bordered.table-sm
+  thead.thread-light
+    tr
+      th.col-12.col-md-2
+      th.col-12.col-md-2 氏名
+      th.col-12.col-md-2 会社名（略称）
+      th.col-12.col-md-2 役職
+      th.col-12.col-md-2 編集ユーザー
+      th.col-12.col-md-2 最終更新日時
+  tbody
+    - @advisors.each do |a|
+      tr
+        td
+          = link_to '詳細', advisor_path(a), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '編集', edit_advisor_path(a), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '削除', advisor_path(a), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
+        td = a.name
+        td = a.company_short_name
+        td = a.position
+        td = Admin.find(a.editor_code).username
+        td = a.updated_at.strftime("%Y/%m/%d %H:%M")

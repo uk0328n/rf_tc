@@ -1,0 +1,60 @@
+p#notice
+  = notice
+= link_to 'データ編集', edit_event_path(@event), class: 'btn btn-default', role: 'button'
+= link_to '一覧に戻る', events_path, class: 'btn btn-default', role: 'button'
+h2 イベント詳細
+br
+.row
+  strong.col-8.col-md-1
+    | 名称:
+  .col-8.col-md-3
+    = @event.name
+  strong.col-8.col-md-1
+    | 開催日:
+  .col-8.col-md-3
+    = @event.event_date.strftime("%Y年%m月%d日")
+br
+h3 参加者リスト
+table.table.table-bordered.table-sm
+  thead.thread-light
+    tr
+      th.col-12.col-md-2 氏名
+      th.col-12.col-md-2 会社（略称）
+      th.col-12.col-md-2 役職
+      th.col-12.col-md-2 担当者TEL
+      th.col-12.col-md-2 担当者eMail
+      th.col-12.col-md-2 出欠
+  tbody
+    - @activities.each do |ac|
+      tr
+        td = ac.customer.name
+        td = ac.customer.company_short_name
+        td = ac.customer.position
+        td = ac.customer.contact_tel
+        td = ac.customer.contact_email
+        td = ac.attendance_type
+          /= link_to '詳細', customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '編集', edit_customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '削除', customer_path(ac), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
+h3 顧問リスト
+table.table.table-bordered.table-sm
+  thead.thread-light
+    tr
+      th.col-12.col-md-2 氏名
+      th.col-12.col-md-2 会社（略称）
+      th.col-12.col-md-2 役職
+      th.col-12.col-md-2 担当者TEL
+      th.col-12.col-md-2 担当者eMail
+      th.col-12.col-md-2 出欠
+  tbody
+    - @event_details.each do |ed|
+      tr
+        td = ed.advisor.name
+        td = ed.advisor.company_short_name
+        td = ed.advisor.position
+        td = ed.advisor.contact_tel
+        td = ed.advisor.contact_email
+        td = ed.attendance_type
+          /= link_to '詳細', advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '編集', edit_advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '削除', advisor_path(ed), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'

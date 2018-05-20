@@ -1,0 +1,31 @@
+= form_with(model: activity, local: true) do |form|
+  - if activity.errors.any?
+    #error_explanation
+      h2
+        = pluralize(activity.errors.count, "error")
+          | prohibited this activity from being saved:
+      ul
+        = activity.errors.full_messages.each do |message|
+          li= message
+  table.table.table-bordered.table-sm
+    thead.thread-light
+      tr
+        th.col-12.col-md-3 氏名
+        th.col-12.col-md-3 会社（略称）
+        th.col-12.col-md-3 役職
+        th.col-12.col-md-3 出欠
+    tbody
+      - @customers.each do |c|
+        tr
+          td = c.name
+          td = c.company_short_name
+          td = c.position
+          td.row
+            .field
+              = form.hidden_field :customer_id, value: c.id
+            .field
+              = form.hidden_field :event_id, value: params[:id]
+            .field
+              = form.select :attendance, {"出席" => 1, "欠席" => 2}
+  .actions
+    = form.submit

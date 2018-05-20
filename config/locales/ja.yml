@@ -1,0 +1,92 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ja:
+  activerecord:
+    attributes:
+      activity:
+        customer_id: 顧客ID
+        event_id: イベントID
+        attendance: 出欠
+      admin:
+        username: ログインID
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: 次回から自動的にログイン
+      advisor:
+        rank: 顧客レベル
+        name: 氏名
+        company: 会社
+        company_short_name: 会社（略称）
+        position: 役職
+        postal_code: 郵便番号
+        address: 住所
+        tel: 電話番号
+        fax: FAX番号
+        email: メールアドレス
+        contact_person_name: 担当者氏名
+        contact_postal_code: 担当者郵便番号
+        contact_address: 担当者住所
+        contact_tel: 担当者電話番号
+        contact_fax: 担当者FAX番号
+        contact_email: 担当者メールアドレス
+      customer:
+        rank: 顧客レベル
+        name: 氏名
+        company: 会社
+        company_short_name: 会社（略称）
+        position: 役職
+        postal_code: 郵便番号
+        address: 住所
+        tel: 電話番号
+        fax: FAX番号
+        email: メールアドレス
+        contact_person_name: 担当者氏名
+        contact_postal_code: 担当者郵便番号
+        contact_address: 担当者住所
+        contact_tel: 担当者電話番号
+        contact_fax: 担当者FAX番号
+        contact_email: 担当者メールアドレス
+      event:
+        name: イベント名
+        event_date: 開催日
+      event_detail:
+        event_id: イベントID
+        advisor_id: 顧問ID
+    errors:
+      models:
+        admin:
+          attributes:
+            password:
+              too_short: が短すぎます。
+            username:
+              taken: は既に登録されています。

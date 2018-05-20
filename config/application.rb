@@ -10,6 +10,7 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require "csv"
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -27,5 +28,9 @@ module TopConnectList
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    # config.active_record.default_timezone = :local
+    config.i18n.default_locale = :ja
+    # Change timezone from UST to JST
+    config.time_zone = 'Tokyo'
   end
 end

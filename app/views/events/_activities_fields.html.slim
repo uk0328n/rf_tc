@@ -1,0 +1,11 @@
+tr
+  td = f.object.customer.name
+  td = f.object.customer.company_short_name
+  td = f.object.customer.position
+  td.row
+    .field
+      = f.hidden_field :customer_id
+    .field
+      = f.hidden_field :event_id
+    .field
+      = f.select :attendance_type, {"出席" => 1, "欠席" => 2}

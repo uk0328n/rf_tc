@@ -38,6 +38,6 @@ class Admin < ApplicationRecord
   private
 
   def set_email
-    self.email = 'yusuke.alfa.0156@gmail.com'
+    self.email = 'test@gmail.com'
   end
 end

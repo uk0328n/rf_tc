@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_admin!
-  
+
   # GET /customers
   # GET /customers.json
   def index
@@ -29,7 +29,7 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
+        format.html { redirect_to @customer, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class CustomersController < ApplicationController
   def update
     respond_to do |format|
       if @customer.update(customer_params)
-        format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
+        format.html { redirect_to @customer, notice: 'データが更新されました。' }
         format.json { render :show, status: :ok, location: @customer }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer.destroy
     respond_to do |format|
-      format.html { redirect_to customers_url, notice: 'Customer was successfully destroyed.' }
+      format.html { redirect_to customers_url, notice: 'データが削除されました。' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +70,6 @@ class CustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
-      params.require(:customer).permit(:name, :company, :event_id)
+      params.require(:customer).permit(Customer.column_names.map{|c| c.to_sym} - ['id', 'created_at', 'updated_at'])
     end
 end

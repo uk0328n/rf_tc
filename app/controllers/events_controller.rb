@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!
 
   # GET /events
   # GET /events.json
@@ -10,15 +11,33 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @activities = Activity.where(event_id: params[:id])
+    @event_details = EventDetail.where(event_id: params[:id])
   end
 
   # GET /events/new
   def new
     @event = Event.new
+    Customer.all.each do |c|
+      @event.activities.build(event_id: @event.id, customer_id: c.id)
+    end
+    Advisor.all.each do |a|
+      @event.event_details.build(event_id: @event.id, advisor_id: a.id)
+    end
   end
 
   # GET /events/1/edit
   def edit
+    Customer.all.each do |c|
+      if Activity.where(event_id: @event.id, customer_id: c.id).blank?
+        @event.activities.build(event_id: @event.id, customer_id: c.id)
+      end
+    end
+    Advisor.all.each do |a|
+      if EventDetail.where(event_id: @event.id, advisor_id: a.id).blank?
+        @event.event_details.build(event_id: @event.id, advisor_id: a.id)
+      end
+    end
   end
 
   # POST /events
@@ -28,10 +47,12 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        logger.debug @event.errors.inspect
+        format.html { redirect_to @event, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @event }
       else
-        format.html { render :new }
+        logger.debug @event.errors.to_hash(true)
+        format.html { redirect_to :action => 'new' }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -41,12 +62,24 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1.json
   def update
     respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+      @event.activities.each do |ac|
+        if ac.id.blank?
+          unless ac.save
+            logger.debug ac.errors.to_hash(true)
+            format.html { redirect_to :action => 'new' }
+            format.json { render json: @event.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+      begin
+        if @event.update(update_event_params)
+          format.html { redirect_to @event, notice: 'データが更新されました。' }
+          format.json { render :show, status: :ok, location: @event }
+        else
+          format.html { redirect_to :action => 'edit' }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
+      rescue ActiveRecord::RecordNotUnique => exception
       end
     end
   end
@@ -56,7 +89,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_url, notice: 'データが削除されました。' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +102,10 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :event_date)
+      params.require(:event).permit(Event.column_names.map{|c| c.to_sym} - ['id', 'created_at', 'updated_at'], {activities_attributes: [:event_id, :customer_id, :attendance_type]}, {event_details_attributes: [:event_id, :advisor_id, :attendance_type]})
+    end
+
+    def update_event_params
+      params.require(:event).permit(Event.column_names.map{|c| c.to_sym} - ['created_at', 'updated_at'], {activities_attributes: [:id, :event_id, :customer_id, :attendance_type]}, {event_details_attributes: [:id, :event_id, :advisor_id, :attendance_type]})
     end
 end
