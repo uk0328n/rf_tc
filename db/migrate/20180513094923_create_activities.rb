@@ -4,6 +4,7 @@ class CreateActivities < ActiveRecord::Migration[5.1]
       t.integer :customer_id
       t.integer :event_id
       t.integer :attendance_type
+      t.integer :editor_code
 
       t.timestamps
     end

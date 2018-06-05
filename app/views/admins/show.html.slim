@@ -1,0 +1,28 @@
+.row
+  p#notice
+    = notice
+.row
+  = link_to 'データ編集', edit_admin_path(@admin), class: 'btn btn-default'
+  = link_to '一覧に戻る', admins_path, class: 'btn btn-default'
+  h2 ユーザーデータ詳細
+  .row
+    strong.col-12.col-md-2
+      | ログインID:
+    .col-12.col-md-5
+      = @admin.username
+  .row
+    strong.col-12.col-md-2
+      | 名前:
+    .col-12.col-md-5
+      = @admin.name
+  .row
+    strong.col-12.col-md-2
+      | 権限:
+    .col-12.col-md-5
+      - case @admin.role_type
+      - when 1
+        | 管理者
+      - when 2
+        | 編集者
+      - when 3
+        | 一般

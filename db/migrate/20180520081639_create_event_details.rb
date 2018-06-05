@@ -4,6 +4,7 @@ class CreateEventDetails < ActiveRecord::Migration[5.1]
       t.integer :event_id
       t.integer :advisor_id
       t.integer :attendance_type
+      t.integer :editor_code
 
       t.timestamps
     end

@@ -14,6 +14,12 @@
   .field.row
     = form.label :event_date, class: 'col-5 col-md-2'
     = form.date_field :event_date, class: 'col-5 col-md-3'
+  .field.row
+    = form.label :venue, class: 'col-5 col-md-2'
+    = form.text_field :venue, class: 'col-5 col-md-3'
+  .field.row
+    = form.label :capacity, class: 'col-5 col-md-2'
+    = form.number_field :capacity, class: 'col-5 col-md-3'
   table.table.table-bordered.table-sm
     thead.thread-light
       tr
@@ -22,7 +28,7 @@
         th.col-12.col-md-3 役職
         th.col-12.col-md-3 出欠
     tbody
-      = form.fields(:activities) do |ac|
+      = form.fields_for :activities do |ac|
         = render 'activities_fields', f: ac
   table.table.table-bordered.table-sm
     thead.thread-light
@@ -32,7 +38,7 @@
         th.col-12.col-md-3 役職
         th.col-12.col-md-3 出欠
     tbody
-      = form.fields(:event_details) do |ed|
+      = form.fields_for :event_details do |ed|
         = render 'event_details_fields', f: ed
   .field.row
     = form.hidden_field :editor_code, value: current_admin.id

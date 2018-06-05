@@ -12,4 +12,6 @@
   .field
     = f.label :advisor_id
     = f.number_field :advisor_id
+  .field
+    = f.hidden_field :editor_code, value: current_admin.id
   .actions = f.submit

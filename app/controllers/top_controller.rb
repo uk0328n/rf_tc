@@ -3,7 +3,11 @@ class TopController < ApplicationController
 
   def admin_logged_in?
     if current_admin.present?
-      redirect_to customers_path
+      if current_admin.role_type <= 2
+        redirect_to customers_path
+      else
+        redirect_to pages_index_path
+      end
     else
       redirect_to admin_session_path
     end

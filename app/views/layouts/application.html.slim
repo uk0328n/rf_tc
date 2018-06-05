@@ -15,12 +15,16 @@ html
       h1 TopConnect名簿管理システム
       ul.nav.nav-tabs
         - if admin_signed_in?
-          li.nav-item
-            = link_to '参加者一覧', customers_path
-          li.nav-item
-            = link_to '顧問一覧', advisors_path
-          li.nav-item
-            = link_to 'イベント一覧', events_path
+          - if current_admin.role_type <= 2
+            li.nav-item
+              = link_to '顧問先一覧', customers_path
+            li.nav-item
+              = link_to '参加者一覧', advisors_path
+            li.nav-item
+              = link_to 'イベント一覧', events_path
+            - if current_admin.role_type == 1
+              li.nav-item
+                = link_to 'ユーザー一覧', admins_path
           li.nav-item
             = link_to 'ログアウト', destroy_admin_session_path, method: :delete
       /p.notice
@@ -28,15 +32,3 @@ html
       /p.alert
         = alert
       = yield
-      /footer.page-footer.teal
-        .container
-          .row
-            .col.l4.s12
-            .col.l6.s12
-              p.grey-text.text-lighten-4
-                | Copyright &copy; 2017 PLATINUM All rights reserved.
-            .col.l2.s12
-      /.hiddendiv.common
-      /.drag-target[data-sidenav="nav-mobile" style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"]
-      /= javascript_include_tag 'application'
-      /= yield :javascript

@@ -9,3 +9,5 @@ tr
       = f.hidden_field :event_id
     .field
       = f.select :attendance_type, {"出席" => 1, "欠席" => 2}
+    .field
+      = f.hidden_field :editor_code, value: current_admin.id

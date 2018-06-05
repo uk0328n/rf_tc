@@ -1,0 +1,30 @@
+h2 ユーザー一覧
+br
+table.table.table-bordered.table-sm
+  thead.thread-light
+    tr
+      th.col-12.col-md-2
+      th.col-12.col-md-2 ログインID
+      th.col-12.col-md-2 名前
+      th.col-12.col-md-2 権限
+      th.col-12.col-md-2 作成日時
+      th.col-12.col-md-2 最終更新日時
+  tbody
+    - @admins.each do |a|
+      tr
+        td
+          = link_to '詳細', admin_path(a), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '編集', edit_admin_path(a), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '削除', admin_path(a), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
+        td = a.username
+        td = a.name
+        td
+          - case a.role_type
+          - when 1
+            | 管理者
+          - when 2
+            | 編集者
+          - when 3
+            | 一般
+        td = a.created_at.strftime("%Y/%m/%d %H:%M")
+        td = a.updated_at.strftime("%Y/%m/%d %H:%M")

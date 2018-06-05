@@ -2,79 +2,98 @@ p#notice
   = notice
 = link_to 'データ編集', edit_advisor_path(@advisor), class: 'btn btn-default'
 = link_to '一覧に戻る', advisors_path, class: 'btn btn-default'
-h2 顧問データ詳細
-.row
-  strong.col-5.col-md-2
-    | 氏名:
-  .col-5.col-md-3
-    = @advisor.name
-.row
-  strong.col-5.col-md-2
-    | 会社:
-  .col-5.col-md-3
-    = @advisor.company
-.row
-  strong.col-5.col-md-2
-    | 会社（略称）:
-  .col-5.col-md-3
-    = @advisor.company_short_name
-.row
-  strong.col-5.col-md-2
-    | 役職:
-  .col-5.col-md-3
-    = @advisor.position
-.row
-  strong.col-5.col-md-2
-    | 郵便番号:
-  .col-5.col-md-3
-    = @advisor.postal_code
-.row
-  strong.col-5.col-md-2
-    | 住所:
-  .col-5.col-md-3
-    = @advisor.address
-.row
-  strong.col-5.col-md-2
-    | 電話番号:
-  .col-5.col-md-3
-    = @advisor.tel
-.row
-  strong.col-5.col-md-2
-    | FAX番号:
-  .col-5.col-md-3
-    = @advisor.fax
-.row
-  strong.col-5.col-md-2
-    | メールアドレス:
-  .col-5.col-md-3
-    = @advisor.email
-.row
-  strong.col-5.col-md-2
-    | 担当者氏名:
-  .col-5.col-md-3
-    = @advisor.contact_person_name
-.row
-  strong.col-5.col-md-2
-    | 担当者郵便番号:
-  .col-5.col-md-3
-    = @advisor.contact_postal_code
-.row
-  strong.col-5.col-md-2
-    | 担当者住所:
-  .col-5.col-md-3
-    = @advisor.contact_address
-.row
-  strong.col-5.col-md-2
-    | 担当者電話番号:
-  .col-5.col-md-3
-    = @advisor.contact_tel
-.row
-  strong.col-5.col-md-2
-    | 担当者FAX番号:
-  .col-5.col-md-3
-    = @advisor.contact_fax
-.row
-  strong.col-5.col-md-2
-    | 担当者メールアドレス:
-  .col-5.col-md-3
-    = @advisor.contact_email
+= form_with(model: @customer, local: true) do |form|
+  h2 参加者データ詳細
+  .row
+    strong.col-5.col-md-2
+      | 氏名:
+    .col-5.col-md-3
+      = @advisor.name
+      = form.hidden_field :name, value: @advisor.name
+  .row
+    strong.col-5.col-md-2
+      | 会社:
+    .col-5.col-md-3
+      = @advisor.company
+      = form.hidden_field :company, value: @advisor.company
+  .row
+    strong.col-5.col-md-2
+      | 会社（略称）:
+    .col-5.col-md-3
+      = @advisor.company_short_name
+      = form.hidden_field :company_short_name, value: @advisor.company_short_name
+  .row
+    strong.col-5.col-md-2
+      | 役職:
+    .col-5.col-md-3
+      = @advisor.position
+      = form.hidden_field :position, value: @advisor.position
+  .row
+    strong.col-5.col-md-2
+      | 郵便番号:
+    .col-5.col-md-3
+      = @advisor.postal_code
+      = form.hidden_field :postal_code, value: @advisor.postal_code
+  .row
+    strong.col-5.col-md-2
+      | 住所:
+    .col-5.col-md-3
+      = @advisor.address
+      = form.hidden_field :address, value: @advisor.address
+  .row
+    strong.col-5.col-md-2
+      | 電話番号:
+    .col-5.col-md-3
+      = @advisor.tel
+      = form.hidden_field :tel, value: @advisor.tel
+  .row
+    strong.col-5.col-md-2
+      | FAX番号:
+    .col-5.col-md-3
+      = @advisor.fax
+      = form.hidden_field :fax, value: @advisor.fax
+  .row
+    strong.col-5.col-md-2
+      | メールアドレス:
+    .col-5.col-md-3
+      = @advisor.email
+      = form.hidden_field :email, value: @advisor.email
+  .row
+    strong.col-5.col-md-2
+      | 担当者氏名:
+    .col-5.col-md-3
+      = @advisor.contact_person_name
+      = form.hidden_field :contact_person_name, value: @advisor.contact_person_name
+  .row
+    strong.col-5.col-md-2
+      | 担当者郵便番号:
+    .col-5.col-md-3
+      = @advisor.contact_postal_code
+      = form.hidden_field :contact_postal_code, value: @advisor.contact_postal_code
+  .row
+    strong.col-5.col-md-2
+      | 担当者住所:
+    .col-5.col-md-3
+      = @advisor.contact_address
+      = form.hidden_field :contact_address, value: @advisor.contact_address
+  .row
+    strong.col-5.col-md-2
+      | 担当者電話番号:
+    .col-5.col-md-3
+      = @advisor.contact_tel
+      = form.hidden_field :contact_tel, value: @advisor.contact_tel
+  .row
+    strong.col-5.col-md-2
+      | 担当者FAX番号:
+    .col-5.col-md-3
+      = @advisor.contact_fax
+      = form.hidden_field :contact_fax, value: @advisor.contact_fax
+  .row
+    strong.col-5.col-md-2
+      | 担当者メールアドレス:
+    .col-5.col-md-3
+      = @advisor.contact_email
+      = form.hidden_field :contact_email, value: @advisor.contact_email
+  = form.hidden_field :editor_code, value: current_admin.id
+  br
+  = form.submit "この参加者を顧問先に複製する", class: 'btn btn-default'

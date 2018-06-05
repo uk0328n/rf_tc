@@ -11,6 +11,19 @@ class CustomersController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def show
+    @customer = Customer.find(params[:id])
+    if params[:event_date_gteq].present? || params[:event_date_lteq].present?
+      @q = Event.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
+      @events = @q.includes(:advisors)
+    else
+      @events = Event.all.includes(:advisors)
+    end
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data render_to_string(template: "customers/show.csv.ruby"), filename: "customer_#{@customer.name}_rank#{@customer.rank}.csv", type: :csv
+      end
+    end
   end
 
   # GET /customers/new

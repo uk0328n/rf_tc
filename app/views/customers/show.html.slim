@@ -1,85 +1,123 @@
-p#notice
-  = notice
-= link_to 'データ編集', edit_customer_path(@customer), class: 'btn btn-default'
-= link_to '一覧に戻る', customers_path, class: 'btn btn-default'
-h2 参加者データ詳細
 .row
-  strong.col-5.col-md-2
-    | 顧客レベル:
-  .col-5.col-md-3
-    = @customer.rank
+  p#notice
+    = notice
 .row
-  strong.col-5.col-md-2
-    | 氏名:
-  .col-5.col-md-3
-    = @customer.name
-.row
-  strong.col-5.col-md-2
-    | 会社:
-  .col-5.col-md-3
-    = @customer.company
-.row
-  strong.col-5.col-md-2
-    | 会社（略称）:
-  .col-5.col-md-3
-    = @customer.company_short_name
-.row
-  strong.col-5.col-md-2
-    | 役職:
-  .col-5.col-md-3
-    = @customer.position
-.row
-  strong.col-5.col-md-2
-    | 郵便番号:
-  .col-5.col-md-3
-    = @customer.postal_code
-.row
-  strong.col-5.col-md-2
-    | 住所:
-  .col-5.col-md-3
-    = @customer.address
-.row
-  strong.col-5.col-md-2
-    | 電話番号:
-  .col-5.col-md-3
-    = @customer.tel
-.row
-  strong.col-5.col-md-2
-    | FAX番号:
-  .col-5.col-md-3
-    = @customer.fax
-.row
-  strong.col-5.col-md-2
-    | メールアドレス:
-  .col-5.col-md-3
-    = @customer.email
-.row
-  strong.col-5.col-md-2
-    | 担当者氏名:
-  .col-5.col-md-3
-    = @customer.contact_person_name
-.row
-  strong.col-5.col-md-2
-    | 担当者郵便番号:
-  .col-5.col-md-3
-    = @customer.contact_postal_code
-.row
-  strong.col-5.col-md-2
-    | 担当者住所:
-  .col-5.col-md-3
-    = @customer.contact_address
-.row
-  strong.col-5.col-md-2
-    | 担当者電話番号:
-  .col-5.col-md-3
-    = @customer.contact_tel
-.row
-  strong.col-5.col-md-2
-    | 担当者FAX番号:
-  .col-5.col-md-3
-    = @customer.contact_fax
-.row
-  strong.col-5.col-md-2
-    | 担当者メールアドレス:
-  .col-5.col-md-3
-    = @customer.contact_email
+  .col-12.col-lg-4
+    = link_to 'データ編集', edit_customer_path(@customer), class: 'btn btn-default'
+    = link_to '一覧に戻る', customers_path, class: 'btn btn-default'
+    h2 顧問先データ詳細
+    .row
+      strong.col-12.col-md-5
+        | 顧客レベル:
+      .col-12.col-md-7
+        = @customer.rank
+    .row
+      strong.col-12.col-md-5
+        | 氏名:
+      .col-12.col-md-7
+        = @customer.name
+    .row
+      strong.col-12.col-md-5
+        | 会社:
+      .col-12.col-md-7
+        = @customer.company
+    .row
+      strong.col-12.col-md-5
+        | 会社（略称）:
+      .col-12.col-md-7
+        = @customer.company_short_name
+    .row
+      strong.col-12.col-md-5
+        | 役職:
+      .col-12.col-md-7
+        = @customer.position
+    .row
+      strong.col-12.col-md-5
+        | 郵便番号:
+      .col-12.col-md-7
+        = @customer.postal_code
+    .row
+      strong.col-12.col-md-5
+        | 住所:
+      .col-12.col-md-7
+        = @customer.address
+    .row
+      strong.col-12.col-md-5
+        | 電話番号:
+      .col-12.col-md-7
+        = @customer.tel
+    .row
+      strong.col-12.col-md-5
+        | FAX番号:
+      .col-12.col-md-7
+        = @customer.fax
+    .row
+      strong.col-12.col-md-5
+        | メールアドレス:
+      .col-12.col-md-7
+        = @customer.email
+    .row
+      strong.col-12.col-md-5
+        | 担当者氏名:
+      .col-12.col-md-7
+        = @customer.contact_person_name
+    .row
+      strong.col-12.col-md-5
+        | 担当者郵便番号:
+      .col-12.col-md-7
+        = @customer.contact_postal_code
+    .row
+      strong.col-12.col-md-5
+        | 担当者住所:
+      .col-12.col-md-7
+        = @customer.contact_address
+    .row
+      strong.col-12.col-md-5
+        | 担当者電話番号:
+      .col-12.col-md-7
+        = @customer.contact_tel
+    .row
+      strong.col-12.col-md-5
+        | 担当者FAX番号:
+      .col-12.col-md-7
+        = @customer.contact_fax
+    .row
+      strong.col-12.col-md-5
+        | 担当者メールアドレス:
+      .col-12.col-md-7
+        = @customer.contact_email
+  .col-12.col-lg-8
+    .row
+      = form_tag customer_path(@customer), method: :get do
+        .col-md-1
+          h5
+            strong 期間
+        .col-md-3
+          = date_field_tag :event_date_gteq, params[:search], class: "form-control"
+        h5.col-md-1 ～
+        .col-md-3
+          = date_field_tag :event_date_lteq, params[:search], class: "form-control"
+        .col-md-4
+          = submit_tag "検索", class: "btn btn-default", role: 'button'
+          = link_to 'クリア', customer_path(@customer), class: "btn btn-default", role: 'button'
+          = link_to "CSV", customer_path(@customer, format: :csv, search: :q), class: "btn btn-default", role: 'button'
+    h2 参加者リスト
+    - @events.each do |event|
+      .row
+        .col-12.col-md-6
+          strong イベント名:　
+          = event.name
+        .col-12.col-md-6
+          strong 開催日:　
+          = event.event_date
+      table.table.table-bordered.table-sm
+        thead.thread-light
+          tr
+            th.col-12.col-md-2 氏名
+            th.col-12.col-md-2 会社名
+            th.col-12.col-md-2 役職
+          - event.advisors.each do |advisor|
+            tr
+              td.col-12.col-md-2 = advisor.name
+              td.col-12.col-md-2 = advisor.company_short_name
+              td.col-12.col-md-2 = advisor.position

@@ -35,9 +35,12 @@ ja:
       activity:
         customer_id: 顧客ID
         event_id: イベントID
-        attendance: 出欠
+        attendance_type: 出欠
+        editor_code: 編集ユーザーID
       admin:
         username: ログインID
+        name: 名前
+        role_type: 権限
         email: メールアドレス
         password: パスワード
         password_confirmation: 確認用パスワード
@@ -59,6 +62,7 @@ ja:
         contact_tel: 担当者電話番号
         contact_fax: 担当者FAX番号
         contact_email: 担当者メールアドレス
+        editor_code: 編集ユーザーID
       customer:
         rank: 顧客レベル
         name: 氏名
@@ -76,9 +80,13 @@ ja:
         contact_tel: 担当者電話番号
         contact_fax: 担当者FAX番号
         contact_email: 担当者メールアドレス
+        editor_code: 編集ユーザーID
       event:
         name: イベント名
         event_date: 開催日
+        venue: 会場
+        capacity: 上限人数
+        editor_code: 編集ユーザーID
       event_detail:
         event_id: イベントID
         advisor_id: 顧問ID

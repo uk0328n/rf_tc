@@ -2,18 +2,69 @@ p#notice
   = notice
 = link_to 'データ編集', edit_event_path(@event), class: 'btn btn-default', role: 'button'
 = link_to '一覧に戻る', events_path, class: 'btn btn-default', role: 'button'
-h2 イベント詳細
+| 　
+= link_to "CSV", event_path(@event, format: :csv, search: :q), class: "btn btn-default", role: 'button'
+h2 イベントデータ詳細
+.col-lg-6
+  .row
+    strong.col-md-2
+      | 名称:
+    .col-md-7
+      = @event.name
+  .row
+    strong.col-md-2
+      | 開催日:
+    .col-md-7
+      = @event.event_date.strftime("%Y年%m月%d日")
+  .row
+    strong.col-md-2
+      | 場所:
+    .col-md-7
+      = @event.venue
+.col-lg-6
+  .row
+    strong.col-md-2
+      | 上限人数:
+    .col-md-7
+      = @event.capacity
+      | 人
+  .row
+    strong.col-md-2
+      | 参加人数:
+    .col-md-7
+      = @number_of_participants
+      | 人
+      - if @number_of_participants > @event.capacity
+        strong.text-danger 　参加人数が上限を超過しています。
 br
-.row
-  strong.col-8.col-md-1
-    | 名称:
-  .col-8.col-md-3
-    = @event.name
-  strong.col-8.col-md-1
-    | 開催日:
-  .col-8.col-md-3
-    = @event.event_date.strftime("%Y年%m月%d日")
 br
+br
+h3 顧問先リスト
+table.table.table-bordered.table-sm
+  thead.thread-light
+    tr
+      th.col-12.col-md-2 氏名
+      th.col-12.col-md-2 会社（略称）
+      th.col-12.col-md-2 役職
+      th.col-12.col-md-2 担当者TEL
+      th.col-12.col-md-2 担当者eMail
+      th.col-12.col-md-1 出欠
+      th.col-12.col-md-1 編集ユーザー
+      th.col-12.col-md-1 最終更新日時
+  tbody
+    - @activities.joins(:customer).includes(:customer).order('customers.name asc').each do |ac|
+      tr
+        td = ac.customer.name
+        td = ac.customer.company_short_name
+        td = ac.customer.position
+        td = ac.customer.contact_tel
+        td = ac.customer.contact_email
+        td = ac.attendance_type
+        td = ac.editor_code
+        td = ac.updated_at.strftime("%Y/%m/%d %H:%M")
+          /= link_to '詳細', customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '編集', edit_customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
+          /= link_to '削除', customer_path(ac), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
 h3 参加者リスト
 table.table.table-bordered.table-sm
   thead.thread-light
@@ -23,31 +74,11 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-2 役職
       th.col-12.col-md-2 担当者TEL
       th.col-12.col-md-2 担当者eMail
-      th.col-12.col-md-2 出欠
+      th.col-12.col-md-1 出欠
+      th.col-12.col-md-1 編集ユーザー
+      th.col-12.col-md-1 最終更新日時
   tbody
-    - @activities.each do |ac|
-      tr
-        td = ac.customer.name
-        td = ac.customer.company_short_name
-        td = ac.customer.position
-        td = ac.customer.contact_tel
-        td = ac.customer.contact_email
-        td = ac.attendance_type
-          /= link_to '詳細', customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '編集', edit_customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '削除', customer_path(ac), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
-h3 顧問リスト
-table.table.table-bordered.table-sm
-  thead.thread-light
-    tr
-      th.col-12.col-md-2 氏名
-      th.col-12.col-md-2 会社（略称）
-      th.col-12.col-md-2 役職
-      th.col-12.col-md-2 担当者TEL
-      th.col-12.col-md-2 担当者eMail
-      th.col-12.col-md-2 出欠
-  tbody
-    - @event_details.each do |ed|
+    - @event_details.joins(:advisor).includes(:advisor).order('advisors.name asc').each do |ed|
       tr
         td = ed.advisor.name
         td = ed.advisor.company_short_name
@@ -55,6 +86,8 @@ table.table.table-bordered.table-sm
         td = ed.advisor.contact_tel
         td = ed.advisor.contact_email
         td = ed.attendance_type
+        td = ed.editor_code
+        td = ed.updated_at.strftime("%Y/%m/%d %H:%M")
           /= link_to '詳細', advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
           /= link_to '編集', edit_advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
           /= link_to '削除', advisor_path(ed), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'

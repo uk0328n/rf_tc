@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.integer "customer_id"
     t.integer "event_id"
     t.integer "attendance_type"
+    t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id", "event_id"], name: "index_activities_on_customer_id_and_event_id", unique: true
@@ -25,6 +26,8 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.string "username", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "name", default: "", null: false
+    t.integer "role_type", default: 3, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -90,6 +93,7 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.integer "event_id"
     t.integer "advisor_id"
     t.integer "attendance_type"
+    t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["advisor_id", "event_id"], name: "index_event_details_on_advisor_id_and_event_id", unique: true
@@ -98,6 +102,8 @@ ActiveRecord::Schema.define(version: 20180520081639) do
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.date "event_date"
+    t.string "venue"
+    t.integer "capacity"
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
