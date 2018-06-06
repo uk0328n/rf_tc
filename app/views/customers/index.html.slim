@@ -22,5 +22,5 @@ table.table.table-bordered.table-sm
         td = c.name
         td = c.company_short_name
         td = c.position
-        td = Admin.find(c.editor_code).username
+        td = Admin.find(c.editor_code).name
         td = c.updated_at.strftime("%Y/%m/%d %H:%M")

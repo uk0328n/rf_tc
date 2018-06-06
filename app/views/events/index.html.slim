@@ -20,5 +20,5 @@ table.table.table-bordered.table-sm
           = link_to '削除', event_path(e), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
         td = e.name
         td = e.event_date.strftime("%Y年%m月%d日")
-        td = Admin.find(e.editor_code).username
+        td = Admin.find(e.editor_code).name
         td = e.updated_at.strftime("%Y/%m/%d %H:%M")

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admins::RegistrationsController < Devise::RegistrationsController
+  before_action :require_no_authentication, :only => [:cancel]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -10,9 +11,13 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    @admin = Admin.new(admin_params)
+    unless @admin.save
+      redirect_to admins_path
+      return
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -59,4 +64,8 @@ class Admins::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  def admin_params
+    params.require(:admin).permit(Admin.column_names - ["id", "created_at", "updated_at"])
+  end
 end

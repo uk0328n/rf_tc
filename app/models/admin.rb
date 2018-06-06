@@ -4,12 +4,10 @@ class Admin < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [:username]
-
+  validates :usename, :name, :role_type, :password, :password_confirmation, presence: true
   #usernameを必須とする
   validates_uniqueness_of :username
   validates_presence_of :username
-
-  before_validation :set_email
 
   #usernameを利用してログインするようにオーバーライド
   def self.find_first_by_auth_conditions(warden_conditions)
@@ -33,11 +31,5 @@ class Admin < ApplicationRecord
   end
 
   def will_save_change_to_email?
-  end
-
-  private
-
-  def set_email
-    self.email = 'test@gmail.com'
   end
 end

@@ -19,6 +19,9 @@
     = form.select :role_type, {"管理者" => 1, "編集者" => 2, "一般" => 3}, class: 'col-5 col-md-3 form-control form-control-lg'
   .field.row
     = form.label :password, class: 'col-5 col-md-2'
-    = form.password_field :password, class: 'col-5 col-md-3'
+    = form.password_field :password, class: 'col-5 col-md-3', autocomplete: "off"
+  .field.row
+    = form.label :password_confirmation, class: 'col-5 col-md-2'
+    = form.password_field :password_confirmation, class: 'col-5 col-md-3', autocomplete: "off"
   .actions.row
     = form.submit class: 'btn btn-default'

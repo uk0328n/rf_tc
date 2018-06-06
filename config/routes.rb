@@ -14,10 +14,10 @@ Rails.application.routes.draw do
     get 'admins', to: 'admins#index'
     get 'admins/new', to: 'admins#new', as: 'new_admin'
     post 'admins', to: 'admins#create'
-    get 'admins/show/:id', to: 'admins#show', as: 'admin'
+    get 'admins/:id', to: 'admins#show', as: 'admin'
     get 'admins/edit/:id', to: 'admins#edit', as: 'edit_admin'
-    patch 'admins/show/:id', to: 'admins#update'
-    delete 'admins', to: 'admins#destroy'
+    patch 'admins/:id', to: 'admins#update'
+    delete 'admins/:id', to: 'admins#destroy'
   end
 
   resources :activities

@@ -59,12 +59,14 @@ table.table.table-bordered.table-sm
         td = ac.customer.position
         td = ac.customer.contact_tel
         td = ac.customer.contact_email
-        td = ac.attendance_type
-        td = ac.editor_code
+        td
+          - case ac.attendance_type
+          - when 1
+            | 出席
+          - when 2
+            | 欠席
+        td = Admin.find(ac.editor_code).name
         td = ac.updated_at.strftime("%Y/%m/%d %H:%M")
-          /= link_to '詳細', customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '編集', edit_customer_path(ac), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '削除', customer_path(ac), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
 h3 参加者リスト
 table.table.table-bordered.table-sm
   thead.thread-light
@@ -85,9 +87,11 @@ table.table.table-bordered.table-sm
         td = ed.advisor.position
         td = ed.advisor.contact_tel
         td = ed.advisor.contact_email
-        td = ed.attendance_type
-        td = ed.editor_code
+        td
+          - case ed.attendance_type
+          - when 1
+            | 出席
+          - when 2
+            | 欠席
+        td = Admin.find(ed.editor_code).name
         td = ed.updated_at.strftime("%Y/%m/%d %H:%M")
-          /= link_to '詳細', advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '編集', edit_advisor_path(ed), class: 'btn btn-default btn-sm', role: 'button'
-          /= link_to '削除', advisor_path(ed), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
