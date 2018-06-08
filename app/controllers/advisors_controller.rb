@@ -31,7 +31,8 @@ class AdvisorsController < ApplicationController
 
     respond_to do |format|
       if @advisor.save
-        format.html { redirect_to @advisor, notice: 'データが新規作成されました。' }
+        format.html { redirect_to new_advisor_path, notice: 'データが新規作成されました。' }
+        # format.html { redirect_to @advisor, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @advisor }
       else
         format.html { render :new }

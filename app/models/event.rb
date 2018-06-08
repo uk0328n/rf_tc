@@ -5,4 +5,5 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :activities, allow_destroy: true
   has_many :customers, through: :activities
   has_many :advisors, through: :event_details
+  validates :name, :event_date, :venue, :capacity, presence: true
 end

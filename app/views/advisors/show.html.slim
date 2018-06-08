@@ -12,6 +12,12 @@ p#notice
       = form.hidden_field :name, value: @advisor.name
   .row
     strong.col-5.col-md-2
+      | フリガナ:
+    .col-5.col-md-3
+      = @advisor.kana
+      = form.hidden_field :kana, value: @advisor.kana
+  .row
+    strong.col-5.col-md-2
       | 会社:
     .col-5.col-md-3
       = @advisor.company

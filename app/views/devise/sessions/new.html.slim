@@ -5,7 +5,7 @@
       h2 ログイン
       - unless flash[:notice].nil?
         .panel
-            = flash[:notice]
+          = flash[:notice]
       = form_for :admin, url: admin_session_path, class: 'std-form' do |f|
         = devise_error_messages!
         .field

@@ -42,7 +42,8 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: 'データが新規作成されました。' }
+        format.html { redirect_to new_customer_path, notice: 'データが新規作成されました。' }
+        # format.html { redirect_to @customer, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }

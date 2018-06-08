@@ -1,5 +1,6 @@
 p#notice
   = notice
+  = alert
 = link_to 'データ編集', edit_event_path(@event), class: 'btn btn-default', role: 'button'
 = link_to '一覧に戻る', events_path, class: 'btn btn-default', role: 'button'
 | 　
@@ -34,8 +35,9 @@ h2 イベントデータ詳細
     .col-md-7
       = @number_of_participants
       | 人
-      - if @number_of_participants > @event.capacity
-        strong.text-danger 　参加人数が上限を超過しています。
+      - if @event.present?
+        - if @number_of_participants > @event.capacity
+          strong.text-danger 　参加人数が上限を超過しています。
 br
 br
 br
@@ -52,7 +54,7 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @activities.joins(:customer).includes(:customer).order('customers.name asc').each do |ac|
+    - @activities.joins(:customer).includes(:customer).order('customers.kana asc').each do |ac|
       tr
         td = ac.customer.name
         td = ac.customer.company_short_name
@@ -80,7 +82,7 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @event_details.joins(:advisor).includes(:advisor).order('advisors.name asc').each do |ed|
+    - @event_details.joins(:advisor).includes(:advisor).order('advisors.kana asc').each do |ed|
       tr
         td = ed.advisor.name
         td = ed.advisor.company_short_name

@@ -28,10 +28,10 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     Customer.all.each do |c|
-      @event.activities.build(event_id: @event.id, customer_id: c.id)
+      @event.activities.build(customer_id: c.id, attendance_type: 2)
     end
     Advisor.all.each do |a|
-      @event.event_details.build(event_id: @event.id, advisor_id: a.id)
+      @event.event_details.build(advisor_id: a.id, attendance_type: 2)
     end
   end
 
@@ -39,12 +39,12 @@ class EventsController < ApplicationController
   def edit
     Customer.all.each do |c|
       if Activity.where(event_id: @event.id, customer_id: c.id).blank?
-        @event.activities.build(event_id: @event.id, customer_id: c.id)
+        @event.activities.build(event_id: @event.id, customer_id: c.id, attendance_type: 2)
       end
     end
     Advisor.all.each do |a|
       if EventDetail.where(event_id: @event.id, advisor_id: a.id).blank?
-        @event.event_details.build(event_id: @event.id, advisor_id: a.id)
+        @event.event_details.build(event_id: @event.id, advisor_id: a.id, attendance_type: 2)
       end
     end
   end
@@ -61,7 +61,7 @@ class EventsController < ApplicationController
         format.json { render :show, status: :created, location: @event }
       else
         logger.debug @event.errors.to_hash(true)
-        format.html { redirect_to :action => 'new' }
+        format.html { render :new }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -85,7 +85,7 @@ class EventsController < ApplicationController
           format.html { redirect_to @event, notice: 'データが更新されました。' }
           format.json { render :show, status: :ok, location: @event }
         else
-          format.html { redirect_to :action => 'edit' }
+          format.html { render :edit }
           format.json { render json: @event.errors, status: :unprocessable_entity }
         end
       rescue ActiveRecord::RecordNotUnique => exception

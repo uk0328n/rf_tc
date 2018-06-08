@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180520081639) do
+ActiveRecord::Schema.define(version: 20180608032732) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "customer_id"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id", "event_id"], name: "index_activities_on_customer_id_and_event_id", unique: true
+    t.index ["customer_id", "event_id"], name: "index_activities_on_customer_id_and_event_id"
   end
 
   create_table "admins", force: :cascade do |t|
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20180520081639) do
   end
 
   create_table "advisors", force: :cascade do |t|
-    t.string "name"
+    t.string "name", default: "", null: false
     t.string "company"
     t.string "company_short_name"
     t.string "position"
@@ -62,12 +62,12 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.boolean "is_disable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_advisors_on_name", unique: true
+    t.string "kana", default: "", null: false
   end
 
   create_table "customers", force: :cascade do |t|
     t.integer "rank"
-    t.string "name"
+    t.string "name", default: "", null: false
     t.string "company"
     t.string "company_short_name"
     t.string "position"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.boolean "is_disable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_customers_on_name", unique: true
+    t.string "kana", default: "", null: false
   end
 
   create_table "event_details", force: :cascade do |t|
@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 20180520081639) do
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["advisor_id", "event_id"], name: "index_event_details_on_advisor_id_and_event_id", unique: true
+    t.index ["advisor_id", "event_id"], name: "index_event_details_on_advisor_id_and_event_id"
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.date "event_date"
-    t.string "venue"
-    t.integer "capacity"
+    t.string "name", default: "", null: false
+    t.date "event_date", null: false
+    t.string "venue", default: "", null: false
+    t.integer "capacity", default: 0, null: false
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

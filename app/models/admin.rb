@@ -4,7 +4,7 @@ class Admin < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [:username]
-  validates :usename, :name, :role_type, :password, :password_confirmation, presence: true
+  validates :username, :name, :role_type, :password, presence: true
   #usernameを必須とする
   validates_uniqueness_of :username
   validates_presence_of :username
