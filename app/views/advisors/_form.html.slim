@@ -1,3 +1,22 @@
+= javascript_include_tag "https://ajaxzip3.github.io/ajaxzip3.js"
+- content_for :javascript
+  javascript:
+    document.addEventListener("DOMContentLoaded", function() {
+      AutoKana.bind("#name", "#kana")
+    });
+    document.addEventListener("change", function() {
+      document.getElementById('kana').value = document.getElementById('kana').value.replace(/[\u3041-\u3096]/g, function(match) {
+        var chr = match.charCodeAt(0) + 0x60
+        return String.fromCharCode(chr)
+      });
+    });
+  coffee:
+    $(document).ready ->
+      $('#postal_code').change (e) ->
+        AjaxZip3.zip2addr(this, '', 'advisor[address]', 'advisor[address]')
+    $(document).ready ->
+      $('#contact_postal_code').change (e) ->
+        AjaxZip3.zip2addr(this, '', 'advisor[contact_address]', 'advisor[contact_address]')
 = form_with(model: advisor, local: true) do |form|
   - if advisor.errors.any?
     #error_explanation
@@ -10,10 +29,10 @@
 
   .field.row
     = form.label :name, class: 'col-5 col-md-2'
-    = form.text_field :name, class: 'col-5 col-md-3'
+    = form.text_field :name, class: 'col-5 col-md-3', id: 'name'
   .field.row
     = form.label :kana, class: 'col-5 col-md-2'
-    = form.text_field :kana, class: 'col-5 col-md-3'
+    = form.text_field :kana, class: 'col-5 col-md-3', id: 'kana'
   .field.row
     = form.label :company, class: 'col-5 col-md-2'
     = form.text_field :company, class: 'col-5 col-md-3'
@@ -25,7 +44,7 @@
     = form.text_field :position, class: 'col-5 col-md-3'
   .field.row
     = form.label :postal_code, class: 'col-5 col-md-2'
-    = form.text_field :postal_code, class: 'col-5 col-md-3'
+    = form.text_field :postal_code, class: 'col-5 col-md-3', id: 'postal_code'
   .field.row
     = form.label :address, class: 'col-5 col-md-2'
     = form.text_field :address, class: 'col-5 col-md-3'
@@ -43,7 +62,7 @@
     = form.text_field :contact_person_name, class: 'col-5 col-md-3'
   .field.row
     = form.label :contact_postal_code, class: 'col-5 col-md-2'
-    = form.text_field :contact_postal_code, class: 'col-5 col-md-3'
+    = form.text_field :contact_postal_code, class: 'col-5 col-md-3', id: 'contact_postal_code'
   .field.row
     = form.label :contact_address, class: 'col-5 col-md-2'
     = form.text_field :contact_address, class: 'col-5 col-md-3'

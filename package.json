@@ -6,7 +6,8 @@
     "config-chain": "^1.1.11",
     "vue": "^2.5.16",
     "vue-loader": "^14.2.2",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.16",
+    "vanilla-autokana": "^1.1.0"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"
