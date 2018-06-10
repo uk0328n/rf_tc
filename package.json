@@ -1,6 +1,10 @@
 {
   "name": "webroot",
   "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@rails/webpacker": "^3.4.1",
     "config-chain": "^1.1.11",
