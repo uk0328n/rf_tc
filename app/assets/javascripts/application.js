@@ -11,9 +11,8 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets
-//= require vanilla-autokana/dist/autokana
