@@ -54,7 +54,7 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @activities.joins(:customer).includes(:customer).order('customers.kana asc').each do |ac|
+    - @activities.each do |ac|
       tr
         td = ac.customer.name
         td = ac.customer.company_short_name
@@ -82,7 +82,7 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @event_details.joins(:advisor).includes(:advisor).order('advisors.kana asc').each do |ed|
+    - @event_details.each do |ed|
       tr
         td = ed.advisor.name
         td = ed.advisor.company_short_name

@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all
+    @customers = Customer.all.order('kana COLLATE "ja_JP.utf8" ASC')
   end
 
   # GET /customers/1
