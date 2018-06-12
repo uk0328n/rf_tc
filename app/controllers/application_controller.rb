@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
 
   #before_filterを設定
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_current_admin
+
+  def set_current_admin
+    Thread.current[:admin] = current_admin
+  end
 
   protected
 

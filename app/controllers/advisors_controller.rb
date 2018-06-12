@@ -8,6 +8,13 @@ class AdvisorsController < ApplicationController
     @advisors = Advisor.all
   end
 
+  def import
+    if params[:file].present?
+      Advisor.simple_import(params[:file].path, ',')
+    end
+    redirect_to advisors_url
+  end
+
   # GET /advisors/1
   # GET /advisors/1.json
   def show

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :event_details
-  resources :advisors
   get 'top/index'
   get 'pages/index'
 
@@ -20,9 +18,15 @@ Rails.application.routes.draw do
     delete 'admins/:id', to: 'admins#destroy'
   end
 
-  resources :activities
+  resources :customers do
+    collection { post :import }
+  end
+  resources :advisors do
+    collection { post :import }
+  end
   resources :events
-  resources :customers
+  resources :activities
+  resources :event_details
 
   root 'top#index'
 end

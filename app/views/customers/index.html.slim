@@ -1,6 +1,13 @@
 h2 顧問先一覧
 br
-= link_to '新規作成', new_customer_path, class: 'btn btn-default btn-sm', role: 'button'
+table.table.table-borderless.table-sm
+  tr
+    td
+      = link_to '新規作成', new_customer_path, class: 'btn btn-default btn-sm', role: 'button'
+    td
+      = form_tag({controller: :customers, action: :import, method: :post}, {multipart: true}) do
+        = file_field_tag :file
+        = submit_tag "CSVアップロード", class: 'btn btn-default btn-sm'
 br
 br
 table.table.table-bordered.table-sm

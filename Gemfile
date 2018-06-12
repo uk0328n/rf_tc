@@ -40,10 +40,9 @@ gem 'devise'
 gem 'omniauth-twitter'
 # Use Slim as template engine
 gem 'slim-rails'
-
 gem 'rails-i18n'
-
 gem 'jquery-rails'
+gem 'activerecord-import'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
