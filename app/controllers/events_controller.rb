@@ -37,16 +37,18 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    Customer.all.order('kana COLLATE "ja_JP.utf8" ASC').each do |c|
+    Customer.all.each do |c|
       if Activity.where(event_id: @event.id, customer_id: c.id).blank?
         @event.activities.build(event_id: @event.id, customer_id: c.id, attendance_type: 2)
       end
     end
-    Advisor.all.order('kana COLLATE "ja_JP.utf8" ASC').each do |a|
+    Advisor.all.each do |a|
       if EventDetail.where(event_id: @event.id, advisor_id: a.id).blank?
         @event.event_details.build(event_id: @event.id, advisor_id: a.id, attendance_type: 2)
       end
     end
+    @event.activities.joins(:customer).includes(:customer).order('customer.kana COLLATE "ja_JP.utf8" ASC')
+    @event.event_details.joins(:advisor).includes(:advisor).order('advisor.kana COLLATE "ja_JP.utf8" ASC')
   end
 
   # POST /events
