@@ -5,7 +5,7 @@ class AdvisorsController < ApplicationController
   # GET /advisors
   # GET /advisors.json
   def index
-    @advisors = Advisor.all.order('kana COLLATE "ja_JP.utf8" ASC')
+    @advisors = Advisor.all
   end
 
   # GET /advisors/1

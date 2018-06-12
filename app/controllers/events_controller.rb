@@ -13,8 +13,8 @@ class EventsController < ApplicationController
   def show
     @customers = Customer.all
     @advisors = Advisor.all
-    @activities = Activity.where(event_id: params[:id]).joins(:customer).includes(:customer).order('customers.kana COLLATE "ja_JP.utf8" ASC')
-    @event_details = EventDetail.where(event_id: params[:id]).joins(:advisor).includes(:advisor).order('advisors.kana COLLATE "ja_JP.utf8" ASC')
+    @activities = Activity.where(event_id: params[:id])
+    @event_details = EventDetail.where(event_id: params[:id])
     @number_of_participants = @activities.where(attendance_type: 1).count + @event_details.where(attendance_type: 1).count
     respond_to do |format|
       format.html
@@ -47,8 +47,6 @@ class EventsController < ApplicationController
         @event.event_details.build(event_id: @event.id, advisor_id: a.id, attendance_type: 2)
       end
     end
-    @event.activities.joins(:customer).includes(:customer).order('customer.kana COLLATE "ja_JP.utf8" ASC')
-    @event.event_details.joins(:advisor).includes(:advisor).order('advisor.kana COLLATE "ja_JP.utf8" ASC')
   end
 
   # POST /events
