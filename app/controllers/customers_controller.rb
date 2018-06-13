@@ -19,11 +19,10 @@ class CustomersController < ApplicationController
   # GET /customers/1.json
   def show
     @customer = Customer.find(params[:id])
+    @events = Event.includes(:activities).where('activities.customer_id = ?', @customer.id).where('activities.attendance_type = 1').references(:activities)
     if params[:event_date_gteq].present? || params[:event_date_lteq].present?
-      @q = Event.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
-      @events = @q.includes(:advisors)
-    else
-      @events = Event.all.includes(:advisors)
+      @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
+      @events = @q
     end
     respond_to do |format|
       format.html

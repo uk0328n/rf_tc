@@ -5,6 +5,15 @@ p#notice
 = link_to '一覧に戻る', events_path, class: 'btn btn-default', role: 'button'
 | 　
 = link_to "CSV", event_path(@event, format: :csv, search: :q), class: "btn btn-default", role: 'button'
+br
+br
+ul.nav.nav-tabs
+  li.nav-item
+    = link_to 'すべて', event_path(params[:id])
+  li.nav-item
+    = link_to '出席', event_path(params[:id], q: 'presentee')
+  li.nav-itemv
+    = link_to '欠席', event_path(params[:id], q: 'absentee')
 h2 イベントデータ詳細
 .col-lg-6
   .row

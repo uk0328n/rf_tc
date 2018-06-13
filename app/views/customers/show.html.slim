@@ -105,7 +105,7 @@
         .col-md-4
           = submit_tag "検索", class: "btn btn-default", role: 'button'
           = link_to 'クリア', customer_path(@customer), class: "btn btn-default", role: 'button'
-          = link_to "CSV", customer_path(@customer, format: :csv, search: :q), class: "btn btn-default", role: 'button'
+          = link_to "CSV", customer_path(@customer, event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq], format: :csv), class: "btn btn-default", role: 'button'
     h2 参加者リスト
     - @events.each do |event|
       .row
@@ -121,7 +121,7 @@
             th.col-12.col-md-2 氏名
             th.col-12.col-md-2 会社名
             th.col-12.col-md-2 役職
-          - event.advisors.each do |advisor|
+          - event.advisors.includes(:event_details).where('event_details.attendance_type = 1').each do |advisor|
             tr
               td.col-12.col-md-2 = advisor.name
               td.col-12.col-md-2 = advisor.company_short_name

@@ -13,9 +13,18 @@ class EventsController < ApplicationController
   def show
     @customers = Customer.all
     @advisors = Advisor.all
-    @activities = Activity.where(event_id: params[:id])
-    @event_details = EventDetail.where(event_id: params[:id])
-    @number_of_participants = @activities.where(attendance_type: 1).count + @event_details.where(attendance_type: 1).count
+    @number_of_participants = Activity.where(event_id: params[:id], attendance_type: 1).count + EventDetail.where(event_id: params[:id], attendance_type: 1).count
+    case params[:q]
+    when 'presentee'
+      @activities = Activity.where(event_id: params[:id], attendance_type: 1)
+      @event_details = EventDetail.where(event_id: params[:id], attendance_type: 1)
+    when 'absentee'
+      @activities = Activity.where(event_id: params[:id], attendance_type: 2)
+      @event_details = EventDetail.where(event_id: params[:id], attendance_type: 2)
+    else
+      @activities = Activity.where(event_id: params[:id])
+      @event_details = EventDetail.where(event_id: params[:id])
+    end
     respond_to do |format|
       format.html
       format.csv do
