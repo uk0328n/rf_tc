@@ -63,26 +63,43 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @customers.each do |c|
-      tr
-        td = c.name
-        td = c.company_short_name
-        td = c.position
-        td = c.contact_tel
-        td = c.contact_email
-        - if Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).present?
+    - if params[:q].present?
+      - @activities.each do |ac|
+        tr
+          td = ac.customer.name
+          td = ac.customer.company_short_name
+          td = ac.customer.position
+          td = ac.customer.contact_tel
+          td = ac.customer.contact_email
           td
-            - case Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.attendance_type
+            - case ac.attendance_type
             - when 1
               | 出席
             - when 2
               | 欠席
-          td = Admin.find(Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.editor_code).name
-          td = Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
-        - else
-          td 未回答
-          td
-          td
+          td = Admin.find(ac.editor_code).name
+          td = ac.updated_at.strftime("%Y/%m/%d %H:%M")
+    - else
+      - @customers.each do |c|
+        tr
+          td = c.name
+          td = c.company_short_name
+          td = c.position
+          td = c.contact_tel
+          td = c.contact_email
+          - if Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).present?
+            td
+              - case Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.attendance_type
+              - when 1
+                | 出席
+              - when 2
+                | 欠席
+            td = Admin.find(Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.editor_code).name
+            td = Activity.where('event_id = ?', @event.id).where('customer_id = ?', c.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
+          - else
+            td 未回答
+            td
+            td
 h3 参加者リスト
 table.table.table-bordered.table-sm
   thead.thread-light
@@ -96,23 +113,40 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - @advisors.each do |a|
-      tr
-        td = a.name
-        td = a.company_short_name
-        td = a.position
-        td = a.contact_tel
-        td = a.contact_email
-        - if EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).present?
+    - if params[:q].present?
+      - @event_details.each do |ed|
+        tr
+          td = ed.advisor.name
+          td = ed.advisor.company_short_name
+          td = ed.advisor.position
+          td = ed.advisor.contact_tel
+          td = ed.advisor.contact_email
           td
-            - case EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.attendance_type
+            - case ed.attendance_type
             - when 1
               | 出席
             - when 2
               | 欠席
-          td = Admin.find(EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.editor_code).name
-          td = EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
-        - else
-          td 未回答
-          td
-          td
+          td = Admin.find(ed.editor_code).name
+          td = ed.updated_at.strftime("%Y/%m/%d %H:%M")
+    - else
+      - @advisors.each do |a|
+        tr
+          td = a.name
+          td = a.company_short_name
+          td = a.position
+          td = a.contact_tel
+          td = a.contact_email
+          - if EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).present?
+            td
+              - case EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.attendance_type
+              - when 1
+                | 出席
+              - when 2
+                | 欠席
+            td = Admin.find(EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.editor_code).name
+            td = EventDetail.where('event_id = ?', @event.id).where('advisor_id = ?', a.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
+          - else
+            td 未回答
+            td
+            td
