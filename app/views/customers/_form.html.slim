@@ -80,5 +80,7 @@
     = form.text_field :contact_email, class: 'col-5 col-md-3'
   .field.row
     = form.hidden_field :editor_code, value: current_admin.id
+  .field.row
+    = form.hidden_field :is_disable, value: FALSE
   .actions.row
     = form.submit class: 'btn btn-default'
