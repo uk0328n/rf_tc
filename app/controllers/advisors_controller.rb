@@ -5,7 +5,7 @@ class AdvisorsController < ApplicationController
   # GET /advisors
   # GET /advisors.json
   def index
-    @advisors = Advisor.all
+    @advisors = Advisor.where.not(is_disable: TRUE)
   end
 
   def import

@@ -11,19 +11,19 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @customers = Customer.all
-    @advisors = Advisor.all
-    @number_of_participants = Activity.where(event_id: params[:id], attendance_type: 1).count + EventDetail.where(event_id: params[:id], attendance_type: 1).count
+    @customers = Customer.where(is_disable: TRUE)
+    @advisors = Advisor.where(is_disable: TRUE)
+    @number_of_participants = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 1).where('customers.is_disable = ?', TRUE).count + EventDetail.includes(:advisor).where(event_id: params[:id], attendance_type: 1).where.not('advisors.is_disable = ?', TRUE).count
     case params[:q]
     when 'presentee'
-      @activities = Activity.where(event_id: params[:id], attendance_type: 1)
-      @event_details = EventDetail.where(event_id: params[:id], attendance_type: 1)
+      @activities = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 1).where.not('customers.is_disable = ?', TRUE)
+      @event_details = EventDetail.includes(:advisor).where(event_id: params[:id], attendance_type: 1).where.not('advisors.is_disable = ?', TRUE)
     when 'absentee'
-      @activities = Activity.where(event_id: params[:id], attendance_type: 2)
-      @event_details = EventDetail.where(event_id: params[:id], attendance_type: 2)
+      @activities = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 2).where.not('customers.is_disable = ?', TRUE)
+      @event_details = EventDetail.includes(:advisor).where(event_id: params[:id], attendance_type: 2).where.not('advisors.is_disable = ?', TRUE)
     else
-      @activities = Activity.where(event_id: params[:id])
-      @event_details = EventDetail.where(event_id: params[:id])
+      @activities = Activity.includes(:customer).where(event_id: params[:id]).where.not('customers.is_disable = ?', TRUE)
+      @event_details = EventDetail.includes(:advisor).where(event_id: params[:id]).where.not('advisors.is_disable = ?', TRUE)
     end
     respond_to do |format|
       format.html
@@ -36,22 +36,22 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
-    Customer.all.each do |c|
+    Customer.where(is_disable: TRUE).each do |c|
       @event.activities.build(customer_id: c.id, attendance_type: 2)
     end
-    Advisor.all.each do |a|
+    Advisor.where(is_disable: TRUE).each do |a|
       @event.event_details.build(advisor_id: a.id, attendance_type: 2)
     end
   end
 
   # GET /events/1/edit
   def edit
-    Customer.all.each do |c|
+    Customer.where(is_disable: TRUE).each do |c|
       if Activity.where(event_id: @event.id, customer_id: c.id).blank?
         @event.activities.build(event_id: @event.id, customer_id: c.id, attendance_type: 2)
       end
     end
-    Advisor.all.each do |a|
+    Advisor.where(is_disable: TRUE).each do |a|
       if EventDetail.where(event_id: @event.id, advisor_id: a.id).blank?
         @event.event_details.build(event_id: @event.id, advisor_id: a.id, attendance_type: 2)
       end
