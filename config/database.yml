@@ -25,4 +25,4 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: /cloudsql/topconnectlist-207206:asia-northeast1:topconnect-postgresql
+  #host: /cloudsql/topconnectlist-207206:asia-northeast1:topconnect-postgresql
