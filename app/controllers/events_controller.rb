@@ -11,9 +11,9 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-    @customers = Customer.where(is_disable: TRUE)
-    @advisors = Advisor.where(is_disable: TRUE)
-    @number_of_participants = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 1).where('customers.is_disable = ?', TRUE).count + EventDetail.includes(:advisor).where(event_id: params[:id], attendance_type: 1).where.not('advisors.is_disable = ?', TRUE).count
+    @customers = Customer.where.not(is_disable: TRUE)
+    @advisors = Advisor.where.not(is_disable: TRUE)
+    @number_of_participants = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 1).where.not('customers.is_disable = ?', TRUE).count + EventDetail.includes(:advisor).where(event_id: params[:id], attendance_type: 1).where.not('advisors.is_disable = ?', TRUE).count
     case params[:q]
     when 'presentee'
       @activities = Activity.includes(:customer).where(event_id: params[:id], attendance_type: 1).where.not('customers.is_disable = ?', TRUE)
