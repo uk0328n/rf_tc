@@ -101,6 +101,6 @@ p#notice
       = @advisor.contact_email
       = form.hidden_field :contact_email, value: @advisor.contact_email
   = form.hidden_field :editor_code, value: current_admin.id
-  = form.hidden_field :is_disable, value: TRUE
+  = form.hidden_field :is_disable, value: FALSE
   br
   = form.submit "この参加者を顧問先に複製する", class: 'btn btn-default'

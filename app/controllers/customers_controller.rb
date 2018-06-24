@@ -45,7 +45,7 @@ class CustomersController < ApplicationController
   # POST /customers.json
   def create
     @customer = Customer.new(customer_params)
-
+    Advisor.find_by(name: @customer.name, company: @customer.company).update_attributes(is_disable: TRUE)
     respond_to do |format|
       if @customer.save
         format.html { redirect_to new_customer_path, notice: 'データが新規作成されました。' }
