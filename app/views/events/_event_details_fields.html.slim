@@ -1,13 +1,14 @@
-tr
-  td = f.object.advisor.name
-  td = f.object.advisor.company_short_name
-  td = f.object.advisor.position
-  td.row
-    .field
-      = f.hidden_field :advisor_id
-    .field
-      = f.hidden_field :event_id
-    .field
-      = f.select :attendance_type, {"出席" => 1, "欠席" => 2}
-    .field
-      = f.hidden_field :editor_code, value: current_admin.id
+- if f.object.advisor.is_disable == false
+  tr.member_list
+    td = f.object.advisor.name
+    td = f.object.advisor.company_short_name
+    td = f.object.advisor.position
+    td.row
+      .field
+        = f.hidden_field :advisor_id
+      .field
+        = f.hidden_field :event_id
+      .field
+        = f.select :attendance_type, {"出席" => 1, "欠席" => 2}
+      .field
+        = f.hidden_field :editor_code, value: current_admin.id

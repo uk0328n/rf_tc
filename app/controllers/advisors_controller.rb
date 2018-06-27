@@ -6,6 +6,12 @@ class AdvisorsController < ApplicationController
   # GET /advisors.json
   def index
     @advisors = Advisor.where.not(is_disable: TRUE)
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data render_to_string(template: "advisors/index.csv.ruby"), filename: "advisors.csv", type: :csv
+      end
+    end
   end
 
   def import
@@ -20,6 +26,13 @@ class AdvisorsController < ApplicationController
   def show
     @advisor = Advisor.find(params[:id])
     @customer = Customer.new
+    @person = Person.find_by(advisor_id: @advisor.id)
+    if @person.present?
+      @existing_customer = Customer.find(@person&.customer_id)
+      if @existing_customer.present?
+        @customer_id = @existing_customer.id
+      end
+    end
   end
 
   # GET /advisors/new
@@ -35,11 +48,16 @@ class AdvisorsController < ApplicationController
   # POST /advisors.json
   def create
     @advisor = Advisor.new(advisor_params)
-
+    @customer = Customer.find_by(name: @advisor.name, company: @advisor.company)
+    if @customer.present?
+      @customer.update_attributes(is_disable: TRUE)
+    end
     respond_to do |format|
       if @advisor.save
+        if @customer.present?
+          @person = Person.create(customer_id: @customer.id, advisor_id: @advisor.id)
+        end
         format.html { redirect_to new_advisor_path, notice: 'データが新規作成されました。' }
-        # format.html { redirect_to @advisor, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @advisor }
       else
         format.html { render :new }
@@ -51,6 +69,10 @@ class AdvisorsController < ApplicationController
   # PATCH/PUT /advisors/1
   # PATCH/PUT /advisors/1.json
   def update
+    @person = Person.find_by(advisor_id: @advisor.id)
+    if Customer.find(@person.customer_id).present?
+      Customer.find(@person.customer_id).update_attributes(is_disable: TRUE)
+    end
     respond_to do |format|
       if @advisor.update(advisor_params)
         format.html { redirect_to @advisor, notice: 'データが更新されました。' }

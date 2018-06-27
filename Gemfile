@@ -41,7 +41,6 @@ gem 'omniauth-twitter'
 # Use Slim as template engine
 gem 'slim-rails'
 gem 'rails-i18n'
-gem 'jquery-rails'
 gem 'activerecord-import'
 
 group :development, :test do

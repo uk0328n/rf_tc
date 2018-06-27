@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608032732) do
+ActiveRecord::Schema.define(version: 20180627064115) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "customer_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20180608032732) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "kana", default: "", null: false
+    t.integer "person_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180608032732) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "kana", default: "", null: false
+    t.integer "person_id"
   end
 
   create_table "event_details", force: :cascade do |t|
@@ -107,6 +109,15 @@ ActiveRecord::Schema.define(version: 20180608032732) do
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "advisor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["advisor_id"], name: "index_people_on_advisor_id", unique: true
+    t.index ["customer_id"], name: "index_people_on_customer_id", unique: true
   end
 
 end

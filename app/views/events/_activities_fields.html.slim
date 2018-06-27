@@ -1,13 +1,14 @@
-tr
-  td = f.object.customer.name
-  td = f.object.customer.company_short_name
-  td = f.object.customer.position
-  td.row
-    .field
-      = f.hidden_field :customer_id
-    .field
-      = f.hidden_field :event_id
-    .field
-      = f.select :attendance_type, {"出席" => 1, "欠席" => 2}
-    .field
-      = f.hidden_field :editor_code, value: current_admin.id
+- if f.object.customer.is_disable == false
+  tr.member_list
+    td = f.object.customer.name
+    td = f.object.customer.company_short_name
+    td = f.object.customer.position
+    td.row
+      .field
+        = f.hidden_field :customer_id
+      .field
+        = f.hidden_field :event_id
+      .field
+        = f.select :attendance_type, {"出席" => 1, "欠席" => 2}
+      .field
+        = f.hidden_field :editor_code, value: current_admin.id

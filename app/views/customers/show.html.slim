@@ -5,92 +5,133 @@
   .col-12.col-lg-4
     = link_to 'データ編集', edit_customer_path(@customer), class: 'btn btn-default'
     = link_to '一覧に戻る', customers_path, class: 'btn btn-default'
-    h2 顧問先データ詳細
-    .row
-      strong.col-12.col-md-5
-        | 顧客レベル:
-      .col-12.col-md-7
-        = @customer.rank
-    .row
-      strong.col-12.col-md-5
-        | 氏名:
-      .col-12.col-md-7
-        = @customer.name
-    .row
-      strong.col-12.col-md-5
-        | フリガナ:
-      .col-12.col-md-7
-        = @customer.kana
-    .row
-      strong.col-12.col-md-5
-        | 会社:
-      .col-12.col-md-7
-        = @customer.company
-    .row
-      strong.col-12.col-md-5
-        | 会社（略称）:
-      .col-12.col-md-7
-        = @customer.company_short_name
-    .row
-      strong.col-12.col-md-5
-        | 役職:
-      .col-12.col-md-7
-        = @customer.position
-    .row
-      strong.col-12.col-md-5
-        | 郵便番号:
-      .col-12.col-md-7
-        = @customer.postal_code
-    .row
-      strong.col-12.col-md-5
-        | 住所:
-      .col-12.col-md-7
-        = @customer.address
-    .row
-      strong.col-12.col-md-5
-        | 電話番号:
-      .col-12.col-md-7
-        = @customer.tel
-    .row
-      strong.col-12.col-md-5
-        | FAX番号:
-      .col-12.col-md-7
-        = @customer.fax
-    .row
-      strong.col-12.col-md-5
-        | メールアドレス:
-      .col-12.col-md-7
-        = @customer.email
-    .row
-      strong.col-12.col-md-5
-        | 担当者氏名:
-      .col-12.col-md-7
-        = @customer.contact_person_name
-    .row
-      strong.col-12.col-md-5
-        | 担当者郵便番号:
-      .col-12.col-md-7
-        = @customer.contact_postal_code
-    .row
-      strong.col-12.col-md-5
-        | 担当者住所:
-      .col-12.col-md-7
-        = @customer.contact_address
-    .row
-      strong.col-12.col-md-5
-        | 担当者電話番号:
-      .col-12.col-md-7
-        = @customer.contact_tel
-    .row
-      strong.col-12.col-md-5
-        | 担当者FAX番号:
-      .col-12.col-md-7
-        = @customer.contact_fax
-    .row
-      strong.col-12.col-md-5
-        | 担当者メールアドレス:
-      .col-12.col-md-7
-        = @customer.contact_email
+    = form_with(model: @advisor, local: true) do |form|
+      h2 顧問先データ詳細
+      .row
+        strong.col-12.col-md-5
+          | 顧客レベル:
+        .col-12.col-md-7
+          = @customer.rank
+      .row
+        strong.col-12.col-md-5
+          | 氏名:
+        .col-12.col-md-7
+          = @customer.name
+          = form.hidden_field :name, value: @customer.name
+      .row
+        strong.col-12.col-md-5
+          | フリガナ:
+        .col-12.col-md-7
+          = @customer.kana
+          = form.hidden_field :kana, value: @customer.kana
+      .row
+        strong.col-12.col-md-5
+          | 会社:
+        .col-12.col-md-7
+          = @customer.company
+          = form.hidden_field :company, value: @customer.company
+      .row
+        strong.col-12.col-md-5
+          | 会社（略称）:
+        .col-12.col-md-7
+          = @customer.company_short_name
+          = form.hidden_field :company_short_name, value: @customer.company_short_name
+      .row
+        strong.col-12.col-md-5
+          | 役職:
+        .col-12.col-md-7
+          = @customer.position
+          = form.hidden_field :position, value: @customer.position
+      .row
+        strong.col-12.col-md-5
+          | 郵便番号:
+        .col-12.col-md-7
+          = @customer.postal_code
+          = form.hidden_field :postal_code, value: @customer.postal_code
+      .row
+        strong.col-12.col-md-5
+          | 住所:
+        .col-12.col-md-7
+          = @customer.address
+          = form.hidden_field :address, value: @customer.address
+      .row
+        strong.col-12.col-md-5
+          | 電話番号:
+        .col-12.col-md-7
+          = @customer.tel
+          = form.hidden_field :tel, value: @customer.tel
+      .row
+        strong.col-12.col-md-5
+          | FAX番号:
+        .col-12.col-md-7
+          = @customer.fax
+          = form.hidden_field :fax, value: @customer.fax
+      .row
+        strong.col-12.col-md-5
+          | メールアドレス:
+        .col-12.col-md-7
+          = @customer.email
+          = form.hidden_field :email, value: @customer.email
+      .row
+        strong.col-12.col-md-5
+          | 担当者氏名:
+        .col-12.col-md-7
+          = @customer.contact_person_name
+          = form.hidden_field :contact_person_name, value: @customer.contact_person_name
+      .row
+        strong.col-12.col-md-5
+          | 担当者郵便番号:
+        .col-12.col-md-7
+          = @customer.contact_postal_code
+          = form.hidden_field :contact_postal_code, value: @customer.contact_postal_code
+      .row
+        strong.col-12.col-md-5
+          | 担当者住所:
+        .col-12.col-md-7
+          = @customer.contact_address
+          = form.hidden_field :contact_address, value: @customer.contact_address
+      .row
+        strong.col-12.col-md-5
+          | 担当者電話番号:
+        .col-12.col-md-7
+          = @customer.contact_tel
+          = form.hidden_field :contact_tel, value: @customer.contact_tel
+      .row
+        strong.col-12.col-md-5
+          | 担当者FAX番号:
+        .col-12.col-md-7
+          = @customer.contact_fax
+          = form.hidden_field :contact_fax, value: @customer.contact_fax
+      .row
+        strong.col-12.col-md-5
+          | 担当者メールアドレス:
+        .col-12.col-md-7
+          = @customer.contact_email
+          = form.hidden_field :contact_email, value: @customer.contact_email
+      = form.hidden_field :editor_code, value: current_admin.id
+      = form.hidden_field :is_disable, value: FALSE
+      br
+      - unless @existing_advisor.present?
+        = form.submit "この顧問先を参加者に複製する", class: 'btn btn-default'
+    - if @existing_advisor.present?
+      = form_for @existing_advisor, url: advisor_path(@advisor_id), action: :update do |f|
+        = f.hidden_field :name, value: @customer.name
+        = f.hidden_field :kana, value: @customer.kana
+        = f.hidden_field :company, value: @customer.company
+        = f.hidden_field :company_short_name, value: @customer.company_short_name
+        = f.hidden_field :postal_code, value: @customer.postal_code
+        = f.hidden_field :address, value: @customer.address
+        = f.hidden_field :tel, value: @customer.tel
+        = f.hidden_field :fax, value: @customer.fax
+        = f.hidden_field :email, value: @customer.email
+        = f.hidden_field :contact_person_name, value: @customer.contact_person_name
+        = f.hidden_field :contact_postal_code, value: @customer.contact_postal_code
+        = f.hidden_field :contact_address, value: @customer.contact_address
+        = f.hidden_field :contact_tel, value: @customer.contact_tel
+        = f.hidden_field :contact_fax, value: @customer.contact_fax
+        = f.hidden_field :contact_email, value: @customer.contact_email
+        = f.hidden_field :is_disable, value: FALSE
+        = f.submit "この顧問先を参加者に切り替える", class: 'btn btn-default'
   .col-12.col-lg-8
     .row
       = form_tag customer_path(@customer), method: :get do
@@ -105,7 +146,7 @@
         .col-md-4
           = submit_tag "検索", class: "btn btn-default", role: 'button'
           = link_to 'クリア', customer_path(@customer), class: "btn btn-default", role: 'button'
-          = link_to "CSV", customer_path(@customer, event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq], format: :csv), class: "btn btn-default", role: 'button'
+          = link_to "CSV出力", customer_path(@customer, event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq], format: :csv), class: "btn btn-default", role: 'button'
     h2 参加者リスト
     - @events.each do |event|
       .row

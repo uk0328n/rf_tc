@@ -1,13 +1,48 @@
+- content_for :javascript
+  javascript:
+    try{
+      document.addEventListener('keypress',function(e){pressfunc(e)},true);
+    }catch(e){
+      document.attachEvent('onkeypress',function(e){pressfunc(e)});
+    }
+    function pressfunc(e){
+      var t = (e.srcElement || e.target);
+      if(e.keyCode==13 && t.name=="keyword"){
+        searchword();
+        if(e.preventDefault){
+          e.preventDefault();
+        }else{
+          e.returnValue=false;
+        }
+      }
+    }
+    function searchword(){
+      var v=document.getElementById("keyword").value;
+      var n2=document.getElementsByClassName("member_list");
+      for(var i=0;i<n2.length;i++){
+        var cn=n2[i].className;
+        cn=cn.replace(/(^|\s)hide(\s|$)/,"");
+        if(! n2[i].innerHTML.match(new RegExp(v))){
+          n2[i].className=(cn+(cn==""?"":" ")+"hide");
+        }else{
+          n2[i].className=cn;
+        }
+      }
+    }
 h2 参加者一覧
 br
 table.table.table-borderless.table-sm
   tr
     td
       = link_to '新規作成', new_advisor_path, class: 'btn btn-default btn-sm', role: 'button'
+      | 　
+      = link_to "CSV出力", advisors_path(@advisors, format: :csv), class: "btn btn-default btn-sm", role: 'button'
     td
       = form_tag({controller: :advisors, action: :import, method: :post}, {multipart: true}) do
         = file_field_tag :file
         = submit_tag "CSVアップロード", class: 'btn btn-default btn-sm'
+= text_field_tag 'keyword'
+= submit_tag "検索", :onclick => "searchword()", :class => "btn btn-default"
 br
 br
 table.table.table-bordered.table-sm
@@ -21,7 +56,7 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-2 最終更新日時
   tbody
     - @advisors.each do |a|
-      tr
+      tr.member_list
         td
           = link_to '詳細', advisor_path(a), class: 'btn btn-default btn-sm', role: 'button'
           = link_to '編集', edit_advisor_path(a), class: 'btn btn-default btn-sm', role: 'button'

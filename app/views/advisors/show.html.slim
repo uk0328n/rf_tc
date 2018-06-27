@@ -103,4 +103,24 @@ p#notice
   = form.hidden_field :editor_code, value: current_admin.id
   = form.hidden_field :is_disable, value: FALSE
   br
-  = form.submit "この参加者を顧問先に複製する", class: 'btn btn-default'
+  - unless @existing_customer.present?
+    = form.submit "この参加者を顧問先に複製する", class: 'btn btn-default'
+- if @existing_customer.present?
+  = form_for @existing_customer, url: customer_path(@customer_id), action: :update do |f|
+    = f.hidden_field :name, value: @advisor.name
+    = f.hidden_field :kana, value: @advisor.kana
+    = f.hidden_field :company, value: @advisor.company
+    = f.hidden_field :company_short_name, value: @advisor.company_short_name
+    = f.hidden_field :postal_code, value: @advisor.postal_code
+    = f.hidden_field :address, value: @advisor.address
+    = f.hidden_field :tel, value: @advisor.tel
+    = f.hidden_field :fax, value: @advisor.fax
+    = f.hidden_field :email, value: @advisor.email
+    = f.hidden_field :contact_person_name, value: @advisor.contact_person_name
+    = f.hidden_field :contact_postal_code, value: @advisor.contact_postal_code
+    = f.hidden_field :contact_address, value: @advisor.contact_address
+    = f.hidden_field :contact_tel, value: @advisor.contact_tel
+    = f.hidden_field :contact_fax, value: @advisor.contact_fax
+    = f.hidden_field :contact_email, value: @advisor.contact_email
+    = f.hidden_field :is_disable, value: FALSE
+    = f.submit "この参加者を顧問先に切り替える", class: 'btn btn-default'

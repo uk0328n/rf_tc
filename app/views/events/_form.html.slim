@@ -20,6 +20,7 @@
   .field.row
     = form.label :capacity, class: 'col-5 col-md-2'
     = form.number_field :capacity, class: 'col-5 col-md-3'
+  h3 顧問先
   table.table.table-bordered.table-sm
     thead.thread-light
       tr
@@ -30,6 +31,7 @@
     tbody
       = form.fields_for :activities do |ac|
         = render 'activities_fields', f: ac
+  h3 参加者
   table.table.table-bordered.table-sm
     thead.thread-light
       tr

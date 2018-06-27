@@ -6,6 +6,25 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.where.not(is_disable: TRUE)
+    case params[:q]
+    when '1'
+      @customers = @customers.where(rank: 1)
+      @rank = '1'
+    when '2'
+      @customers = @customers.where(rank: 2)
+      @rank = '2'
+    when '3'
+      @customers = @customers.where(rank: 3)
+      @rank = '3'
+    else
+      @rank = 'all'
+    end
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data render_to_string(template: "customers/index.csv.ruby"), filename: "customers_rank#{@rank}.csv", type: :csv
+      end
+    end
   end
 
   def import
@@ -30,6 +49,14 @@ class CustomersController < ApplicationController
         send_data render_to_string(template: "customers/show.csv.ruby"), filename: "customer_#{@customer.name}_rank#{@customer.rank}.csv", type: :csv
       end
     end
+    @advisor = Advisor.new
+    @person = Person.find_by(customer_id: @customer.id)
+    if @person.present?
+      @existing_advisor = Advisor.find(@person&.advisor_id)
+      if @existing_advisor.present?
+        @advisor_id = @existing_advisor.id
+      end
+    end
   end
 
   # GET /customers/new
@@ -45,11 +72,16 @@ class CustomersController < ApplicationController
   # POST /customers.json
   def create
     @customer = Customer.new(customer_params)
-    Advisor.find_by(name: @customer.name, company: @customer.company).update_attributes(is_disable: TRUE)
+    @advisor = Advisor.find_by(name: @customer.name, company: @customer.company)
+    if @advisor.present?
+      @advisor.update_attributes(is_disable: TRUE)
+    end
     respond_to do |format|
       if @customer.save
+        if @advisor.present?
+          @person = Person.create(customer_id: @customer.id, advisor_id: @advisor.id)
+        end
         format.html { redirect_to new_customer_path, notice: 'データが新規作成されました。' }
-        # format.html { redirect_to @customer, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }
@@ -61,6 +93,10 @@ class CustomersController < ApplicationController
   # PATCH/PUT /customers/1
   # PATCH/PUT /customers/1.json
   def update
+    @person = Person.find_by(customer_id: @customer.id)
+    if Advisor.find(@person.advisor_id).present?
+      Advisor.find(@person.advisor_id).update_attributes(is_disable: TRUE)
+    end
     respond_to do |format|
       if @customer.update(customer_params)
         format.html { redirect_to @customer, notice: 'データが更新されました。' }

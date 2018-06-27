@@ -1,4 +1,40 @@
+- content_for :javascript
+  javascript:
+    try{
+      document.addEventListener('keypress',function(e){pressfunc(e)},true);
+    }catch(e){
+      document.attachEvent('onkeypress',function(e){pressfunc(e)});
+    }
+    function pressfunc(e){
+      var t = (e.srcElement || e.target);
+      if(e.keyCode==13 && t.name=="keyword"){
+        searchword();
+        if(e.preventDefault){
+          e.preventDefault();
+        }else{
+          e.returnValue=false;
+        }
+      }
+    }
+    function searchword(){
+      var v=document.getElementById("keyword").value;
+      var n2=document.getElementsByClassName("member_list");
+      for(var i=0;i<n2.length;i++){
+        var cn=n2[i].className;
+        cn=cn.replace(/(^|\s)hide(\s|$)/,"");
+        if(! n2[i].innerHTML.match(new RegExp(v))){
+          n2[i].className=(cn+(cn==""?"":" ")+"hide");
+        }else{
+          n2[i].className=cn;
+        }
+      }
+    }
 = link_to '詳細表示', @event, class: 'btn btn-default'
 = link_to '一覧に戻る', events_path, class: 'btn btn-default'
+
 h2 イベントデータ編集
+= text_field_tag 'keyword'
+= submit_tag "検索", :onclick => "searchword()", :class => "btn btn-default"
+br
+br
 = render 'form', event: @event

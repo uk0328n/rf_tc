@@ -36,22 +36,22 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
-    Customer.where(is_disable: TRUE).each do |c|
+    Customer.where.not(is_disable: TRUE).each do |c|
       @event.activities.build(customer_id: c.id, attendance_type: 2)
     end
-    Advisor.where(is_disable: TRUE).each do |a|
+    Advisor.where.not(is_disable: TRUE).each do |a|
       @event.event_details.build(advisor_id: a.id, attendance_type: 2)
     end
   end
 
   # GET /events/1/edit
   def edit
-    Customer.where(is_disable: TRUE).each do |c|
+    Customer.where.not(is_disable: TRUE).each do |c|
       if Activity.where(event_id: @event.id, customer_id: c.id).blank?
         @event.activities.build(event_id: @event.id, customer_id: c.id, attendance_type: 2)
       end
     end
-    Advisor.where(is_disable: TRUE).each do |a|
+    Advisor.where.not(is_disable: TRUE).each do |a|
       if EventDetail.where(event_id: @event.id, advisor_id: a.id).blank?
         @event.event_details.build(event_id: @event.id, advisor_id: a.id, attendance_type: 2)
       end
