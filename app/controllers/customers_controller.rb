@@ -37,7 +37,6 @@ class CustomersController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def show
-    @customer = Customer.find(params[:id])
     @events = Event.includes(:activities).where('activities.customer_id = ?', @customer.id).where('activities.attendance_type = 1').references(:activities)
     if params[:event_date_gteq].present? || params[:event_date_lteq].present?
       @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
@@ -54,7 +53,7 @@ class CustomersController < ApplicationController
     if @person.present?
       @existing_advisor = Advisor.find(@person&.advisor_id)
       if @existing_advisor.present?
-        @advisor_id = @existing_advisor.id
+        @advisor_id = @existing_advisor&.id
       end
     end
   end
@@ -79,7 +78,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       if @customer.save
         if @advisor.present?
-          @person = Person.create(customer_id: @customer.id, advisor_id: @advisor.id)
+          @person = Person.create(customer_id: @customer.id, advisor_id: @advisor&.id)
         end
         format.html { redirect_to new_customer_path, notice: 'データが新規作成されました。' }
         format.json { render :show, status: :created, location: @customer }
@@ -94,8 +93,8 @@ class CustomersController < ApplicationController
   # PATCH/PUT /customers/1.json
   def update
     @person = Person.find_by(customer_id: @customer.id)
-    if Advisor.find(@person.advisor_id).present?
-      Advisor.find(@person.advisor_id).update_attributes(is_disable: TRUE)
+    if Advisor.find(@person&.advisor_id).present?
+      Advisor.find(@person&.advisor_id).update_attributes(is_disable: TRUE)
     end
     respond_to do |format|
       if @customer.update(customer_params)
