@@ -1,11 +1,11 @@
-- if f.object.advisor.is_disable == false
-  tr.member_list
-    td = f.object.advisor.name
-    td = f.object.advisor.company_short_name
-    td = f.object.advisor.position
+tr.member_list
+  - if f.object.person&.role_type == 2
+    td = f.object.person.name
+    td = f.object.person.company_short_name
+    td = f.object.person.position
     td.row
       .field
-        = f.hidden_field :advisor_id
+        = f.hidden_field :person_id
       .field
         = f.hidden_field :event_id
       .field

@@ -1,0 +1,7 @@
+.row
+  p#notice
+    = notice
+= link_to '一覧に戻る', advisors_path, class: 'btn btn-default'
+h2 参加者データ新規追加
+= form_with url: advisors_path, method: :post, scope: :person, local: true do |form|
+  = render 'advisor_form', advisor: @advisor, form: form

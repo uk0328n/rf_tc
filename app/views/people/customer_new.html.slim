@@ -1,0 +1,7 @@
+.row
+  p#notice
+    = notice
+= link_to '一覧に戻る', customers_path, class: 'btn btn-default'
+h2 顧問先データ新規追加
+= form_with url: customers_path, method: :post, scope: :person, local: true do |form|
+  = render 'customer_form', customer: @customer, form: form

@@ -1,0 +1,5 @@
+= link_to '詳細表示', customer_path, class: 'btn btn-default'
+= link_to '一覧に戻る', customers_path, class: 'btn btn-default'
+h2 顧問先データ編集
+= form_with url: customer_path, method: :patch, scope: :person, local: true do |form|
+  = render 'customer_form', customer: @customer, form: form

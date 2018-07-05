@@ -1,0 +1,5 @@
+= link_to '詳細表示', advisor_path, class: 'btn btn-default'
+= link_to '一覧に戻る', advisors_path, class: 'btn btn-default'
+h2 参加者データ編集
+= form_with url: advisor_path, method: :patch, scope: :person, local: true do |form|
+  = render 'advisor_form', advisor: @advisor, form: form

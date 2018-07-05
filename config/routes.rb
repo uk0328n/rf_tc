@@ -18,13 +18,28 @@ Rails.application.routes.draw do
     delete 'admins/:id', to: 'admins#destroy'
   end
 
-  resources :customers do
-    collection { post :import }
-  end
-  resources :advisors do
-    collection { post :import }
-  end
+  get 'customers', to: 'people#customers_index', as: 'customers'
+  get 'customers/new', to: 'people#customer_new', as: 'new_customer'
+  post 'customers', to: 'people#customer_create'
+  get 'customers/:id', to: 'people#customer_show', as: 'customer'
+  get 'customers/edit/:id', to: 'people#customer_edit', as: 'edit_customer'
+  patch 'customers/:id', to: 'people#customer_update'
+  delete 'customers/:id', to: 'people#customer_destroy'
+  post 'customers/import', to: 'people#customers_import', as: 'import_customers'
+  get 'advisors', to: 'people#advisors_index', as: 'advisors'
+  get 'advisors/new', to: 'people#advisor_new', as: 'new_advisor'
+  post 'advisors', to: 'people#advisor_create'
+  get 'advisors/:id', to: 'people#advisor_show', as: 'advisor'
+  get 'advisors/edit/:id', to: 'people#advisor_edit', as: 'edit_advisor'
+  patch 'advisors/:id', to: 'people#advisor_update'
+  delete 'advisors/:id', to: 'people#advisor_destroy'
+  post 'advisors/import', to: 'people#advisors_import', as: 'import_advisors'
+
   resources :events
+  scope :events do
+    get '/:id/fix', to: 'events#fix', as: 'fix_event'
+  end
+
   resources :activities
   resources :event_details
 

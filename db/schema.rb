@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627064115) do
+ActiveRecord::Schema.define(version: 20180704154827) do
 
   create_table "activities", force: :cascade do |t|
     t.integer "customer_id"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20180627064115) do
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "advisor_id"
+    t.integer "person_id"
+    t.integer "fixed_role_type"
     t.index ["customer_id", "event_id"], name: "index_activities_on_customer_id_and_event_id"
   end
 
@@ -109,6 +112,7 @@ ActiveRecord::Schema.define(version: 20180627064115) do
     t.integer "editor_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_fixed"
   end
 
   create_table "people", force: :cascade do |t|
@@ -116,6 +120,26 @@ ActiveRecord::Schema.define(version: 20180627064115) do
     t.integer "advisor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role_type"
+    t.integer "rank"
+    t.string "name"
+    t.string "kana"
+    t.string "company"
+    t.string "company_kana"
+    t.string "company_short_name"
+    t.string "position"
+    t.string "postal_code"
+    t.string "address"
+    t.string "tel"
+    t.string "fax"
+    t.string "email"
+    t.string "contact_person_name"
+    t.string "contact_postal_code"
+    t.string "contact_address"
+    t.string "contact_tel"
+    t.string "contact_fax"
+    t.string "contact_email"
+    t.string "editor_code"
     t.index ["advisor_id"], name: "index_people_on_advisor_id", unique: true
     t.index ["customer_id"], name: "index_people_on_customer_id", unique: true
   end
