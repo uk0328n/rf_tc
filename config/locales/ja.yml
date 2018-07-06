@@ -2,9 +2,10 @@ ja:
   activerecord:
     attributes:
       activity:
-        customer_id: 顧客ID
+        person_id: 顧客ID
         event_id: イベントID
         attendance_type: 出欠
+        fixed_role_type: 顧客種別
         editor_code: 編集ユーザーID
       admin:
         username: ログインID
@@ -15,12 +16,11 @@ ja:
         password_confirmation: 確認用パスワード
         remember_me: 次回から自動的にログイン
       advisor:
-        code: 人物コード
-        rank: 顧客レベル
         name: 氏名
         kana: フリガナ
         company: 会社
         company_short_name: 会社（略称）
+        company_kana: 会社（カナ）
         position: 役職
         postal_code: 郵便番号
         address: 住所
@@ -34,13 +34,14 @@ ja:
         contact_fax: 担当者FAX番号
         contact_email: 担当者メールアドレス
         editor_code: 編集ユーザーID
+        role_type: 顧客種別
       customer:
-        code: 人物コード
         rank: 顧客レベル
         name: 氏名
         kana: フリガナ
         company: 会社
         company_short_name: 会社（略称）
+        company_kana: 会社（カナ）
         position: 役職
         postal_code: 郵便番号
         address: 住所
@@ -54,15 +55,34 @@ ja:
         contact_fax: 担当者FAX番号
         contact_email: 担当者メールアドレス
         editor_code: 編集ユーザーID
+        role_type: 顧客種別
+      person:
+        rank: 顧客レベル
+        name: 氏名
+        kana: フリガナ
+        company: 会社
+        company_short_name: 会社（略称）
+        company_kana: 会社（カナ）
+        position: 役職
+        postal_code: 郵便番号
+        address: 住所
+        tel: 電話番号
+        fax: FAX番号
+        email: メールアドレス
+        contact_person_name: 担当者氏名
+        contact_postal_code: 担当者郵便番号
+        contact_address: 担当者住所
+        contact_tel: 担当者電話番号
+        contact_fax: 担当者FAX番号
+        contact_email: 担当者メールアドレス
+        editor_code: 編集ユーザーID
+        role_type: 顧客種別
       event:
         name: イベント名
         event_date: 開催日
         venue: 会場
         capacity: 上限人数
         editor_code: 編集ユーザーID
-      event_detail:
-        event_id: イベントID
-        advisor_id: 顧問ID
     errors:
       models:
         admin:

@@ -98,10 +98,23 @@ class PeopleController < ApplicationController
 
   def advisors_index
     @advisors = Person.where(role_type: 2)
+    case params[:q]
+    when '1'
+      @advisors = @advisors.where(rank: 1)
+      @rank = '1'
+    when '2'
+      @advisors = @advisors.where(rank: 2)
+      @rank = '2'
+    when '3'
+      @advisors = @advisors.where(rank: 3)
+      @rank = '3'
+    else
+      @rank = 'all'
+    end
     respond_to do |format|
       format.html
       format.csv do
-        send_data render_to_string(template: "people/advisors_index.csv.ruby"), filename: "advisors.csv", type: :csv
+        send_data render_to_string(template: "people/advisors_index.csv.ruby"), filename: "advisors_rank#{@rank}.csv", type: :csv
       end
     end
   end

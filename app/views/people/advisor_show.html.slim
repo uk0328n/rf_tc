@@ -5,6 +5,11 @@ p#notice
 h2 参加者データ詳細
 .row
   strong.col-5.col-md-2
+    | 顧客ランク:
+  .col-5.col-md-3
+    = @advisor.rank
+.row
+  strong.col-5.col-md-2
     | 氏名:
   .col-5.col-md-3
     = @advisor.name

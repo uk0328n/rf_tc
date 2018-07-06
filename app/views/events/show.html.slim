@@ -21,7 +21,7 @@ p#notice
   = link_to "データ確定", fix_event_path(@event), class: "btn btn-default fix", role: 'button'
 - else
   | 　
-  = link_to "確定取消", fix_event_path(@event, q: :reset), class: "btn btn-default fix", role: 'button'
+  = link_to "確定取消", fix_event_path(@event, q: :reset), class: "btn btn-default", role: 'button'
 br
 br
 ul.nav.nav-tabs
@@ -80,43 +80,60 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - if params[:q].present?
-      - @customer_activities.each do |cac|
+    - if @event.is_fixed
+      - @fixed_customer_activities.each do |fca|
         tr
-          td = cac.person.name
-          td = cac.person.company_short_name
-          td = cac.person.position
-          td = cac.person.contact_tel
-          td = cac.person.contact_email
+          td = fca.person.name
+          td = fca.person.company_short_name
+          td = fca.person.position
+          td = fca.person.contact_tel
+          td = fca.person.contact_email
           td
-            - case cac.attendance_type
+            - case fca.attendance_type
             - when 1
               | 出席
             - when 2
               | 欠席
-          td = Admin.find(cac.editor_code).name
-          td = cac.updated_at.strftime("%Y/%m/%d %H:%M")
+          td = Admin.find(fca.editor_code).name
+          td = fca.updated_at.strftime("%Y/%m/%d %H:%M")
     - else
-      - @customers.each do |c|
-        tr
-          td = c.name
-          td = c.company_short_name
-          td = c.position
-          td = c.contact_tel
-          td = c.contact_email
-          - if Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).present?
+      - if params[:q].present?
+        - @customer_activities.each do |cac|
+          tr
+            td = cac.person.name
+            td = cac.person.company_short_name
+            td = cac.person.position
+            td = cac.person.contact_tel
+            td = cac.person.contact_email
             td
-              - case Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.attendance_type
+              - case cac.attendance_type
               - when 1
                 | 出席
               - when 2
                 | 欠席
-            td = Admin.find(Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.editor_code).name
-            td = Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
-          - else
-            td 未回答
-            td
-            td
+            td = Admin.find(cac.editor_code).name
+            td = cac.updated_at.strftime("%Y/%m/%d %H:%M")
+      - else
+        - @customers.each do |c|
+          tr
+            td = c.name
+            td = c.company_short_name
+            td = c.position
+            td = c.contact_tel
+            td = c.contact_email
+            - if Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).present?
+              td
+                - case Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.attendance_type
+                - when 1
+                  | 出席
+                - when 2
+                  | 欠席
+              td = Admin.find(Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.editor_code).name
+              td = Activity.where('event_id = ?', @event.id).where('person_id = ?', c.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
+            - else
+              td 未回答
+              td
+              td
 h3 参加者リスト
 table.table.table-bordered.table-sm
   thead.thread-light
@@ -130,40 +147,57 @@ table.table.table-bordered.table-sm
       th.col-12.col-md-1 編集ユーザー
       th.col-12.col-md-1 最終更新日時
   tbody
-    - if params[:q].present?
-      - @advisor_activities.each do |aac|
+    - if @event.is_fixed
+      - @fixed_advisor_activities.each do |faa|
         tr
-          td = aac.person.name
-          td = aac.person.company_short_name
-          td = aac.person.position
-          td = aac.person.contact_tel
-          td = aac.person.contact_email
+          td = faa.person.name
+          td = faa.person.company_short_name
+          td = faa.person.position
+          td = faa.person.contact_tel
+          td = faa.person.contact_email
           td
-            - case aac.attendance_type
+            - case faa.attendance_type
             - when 1
               | 出席
             - when 2
               | 欠席
-          td = Admin.find(aac.editor_code).name
-          td = aac.updated_at.strftime("%Y/%m/%d %H:%M")
+          td = Admin.find(faa.editor_code).name
+          td = faa.updated_at.strftime("%Y/%m/%d %H:%M")
     - else
-      - @advisors.each do |a|
-        tr
-          td = a.name
-          td = a.company_short_name
-          td = a.position
-          td = a.contact_tel
-          td = a.contact_email
-          - if Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).present?
+      - if params[:q].present?
+        - @advisor_activities.each do |aac|
+          tr
+            td = aac.person.name
+            td = aac.person.company_short_name
+            td = aac.person.position
+            td = aac.person.contact_tel
+            td = aac.person.contact_email
             td
-              - case Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.attendance_type
+              - case aac.attendance_type
               - when 1
                 | 出席
               - when 2
                 | 欠席
-            td = Admin.find(Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.editor_code).name
-            td = Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
-          - else
-            td 未回答
-            td
-            td
+            td = Admin.find(aac.editor_code).name
+            td = aac.updated_at.strftime("%Y/%m/%d %H:%M")
+      - else
+        - @advisors.each do |a|
+          tr
+            td = a.name
+            td = a.company_short_name
+            td = a.position
+            td = a.contact_tel
+            td = a.contact_email
+            - if Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).present?
+              td
+                - case Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.attendance_type
+                - when 1
+                  | 出席
+                - when 2
+                  | 欠席
+              td = Admin.find(Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.editor_code).name
+              td = Activity.where('event_id = ?', @event.id).where('person_id = ?', a.id).last.updated_at.strftime("%Y/%m/%d %H:%M")
+            - else
+              td 未回答
+              td
+              td

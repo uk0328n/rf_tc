@@ -45,6 +45,15 @@ table.table.table-borderless.table-sm
 = submit_tag "検索", :onclick => "searchword()", :class => "btn btn-default"
 br
 br
+ul.nav.nav-tabs
+  li.nav-item
+    = link_to 'すべて', advisors_path
+  li.nav-item
+    = link_to '顧客ランク1', advisors_path(q: 1)
+  li.nav-item
+    = link_to '顧客ランク2', advisors_path(q: 2)
+  li.nav-item
+    = link_to '顧客ランク3', advisors_path(q: 3)
 table.table.table-bordered.table-sm
   thead.thread-light
     tr

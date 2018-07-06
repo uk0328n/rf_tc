@@ -18,58 +18,58 @@
       li= message
 
 .field.row
-  = form.label :rank, class: 'col-5 col-md-2'
+  = form.label :rank, '顧客レベル', class: 'col-5 col-md-2'
   = form.text_field :rank, class: 'col-5 col-md-3', value: @customer.rank
 .field.row
-  = form.label :name, class: 'col-5 col-md-2'
+  = form.label :name, '氏名', class: 'col-5 col-md-2'
   = form.text_field :name, class: 'col-5 col-md-3', id: 'name', value: @customer.name
 .field.row
-  = form.label :kana, class: 'col-5 col-md-2'
+  = form.label :kana, 'フリガナ', class: 'col-5 col-md-2'
   = form.text_field :kana, class: 'col-5 col-md-3', id: 'kana', value: @customer.kana
 .field.row
-  = form.label :company, class: 'col-5 col-md-2'
+  = form.label :company, '会社', class: 'col-5 col-md-2'
   = form.text_field :company, class: 'col-5 col-md-3', value: @customer.company
 .field.row
-  = form.label :company_short_name, class: 'col-5 col-md-2'
+  = form.label :company_short_name, '会社（略称）', class: 'col-5 col-md-2'
   = form.text_field :company_short_name, class: 'col-5 col-md-3', value: @customer.company_short_name
 .field.row
-  = form.label :company_kana, class: 'col-5 col-md-2'
+  = form.label :company_kana, '会社（カナ）', class: 'col-5 col-md-2'
   = form.text_field :company_kana, class: 'col-5 col-md-3', value: @customer.company_kana
 .field.row
-  = form.label :position, class: 'col-5 col-md-2'
+  = form.label :position, '役職', class: 'col-5 col-md-2'
   = form.text_field :position, class: 'col-5 col-md-3', value: @customer.position
 .field.row
-  = form.label :postal_code, class: 'col-5 col-md-2'
+  = form.label :postal_code, '郵便番号', class: 'col-5 col-md-2'
   = form.text_field :postal_code, class: 'col-5 col-md-3', id: 'postal_code', value: @customer.postal_code
 .field.row
-  = form.label :address, class: 'col-5 col-md-2'
+  = form.label :address, '住所', class: 'col-5 col-md-2'
   = form.text_field :address, class: 'col-5 col-md-3', value: @customer.address
 .field.row
-  = form.label :tel, class: 'col-5 col-md-2'
+  = form.label :tel, '電話番号', class: 'col-5 col-md-2'
   = form.text_field :tel, class: 'col-5 col-md-3', value: @customer.tel
 .field.row
-  = form.label :fax, class: 'col-5 col-md-2'
+  = form.label :fax, 'FAX番号', class: 'col-5 col-md-2'
   = form.text_field :fax, class: 'col-5 col-md-3', value: @customer.fax
 .field.row
-  = form.label :email, class: 'col-5 col-md-2'
+  = form.label :email, 'メールアドレス', class: 'col-5 col-md-2'
   = form.text_field :email, class: 'col-5 col-md-3', value: @customer.email
 .field.row
-  = form.label :contact_person_name, class: 'col-5 col-md-2'
+  = form.label :contact_person_name, '担当者氏名', class: 'col-5 col-md-2'
   = form.text_field :contact_person_name, class: 'col-5 col-md-3', value: @customer.contact_person_name
 .field.row
-  = form.label :contact_postal_code, class: 'col-5 col-md-2'
+  = form.label :contact_postal_code, '担当者郵便番号', class: 'col-5 col-md-2'
   = form.text_field :contact_postal_code, class: 'col-5 col-md-3', id: 'contact_postal_code', value: @customer.contact_postal_code
 .field.row
-  = form.label :contact_address, class: 'col-5 col-md-2'
+  = form.label :contact_address, '担当者住所', class: 'col-5 col-md-2'
   = form.text_field :contact_address, class: 'col-5 col-md-3', value: @customer.contact_address
 .field.row
-  = form.label :contact_tel, class: 'col-5 col-md-2'
+  = form.label :contact_tel, '担当者電話番号', class: 'col-5 col-md-2'
   = form.text_field :contact_tel, class: 'col-5 col-md-3', value: @customer.contact_tel
 .field.row
-  = form.label :contact_fax, class: 'col-5 col-md-2'
+  = form.label :contact_fax, '担当者FAX番号', class: 'col-5 col-md-2'
   = form.text_field :contact_fax, class: 'col-5 col-md-3', value: @customer.contact_fax
 .field.row
-  = form.label :contact_email, class: 'col-5 col-md-2'
+  = form.label :contact_email, '担当者メールアドレス', class: 'col-5 col-md-2'
   = form.text_field :contact_email, class: 'col-5 col-md-3', value: @customer.contact_email
 .field.row
   = form.hidden_field :editor_code, value: current_admin.id

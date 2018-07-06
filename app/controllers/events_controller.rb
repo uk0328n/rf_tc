@@ -18,12 +18,18 @@ class EventsController < ApplicationController
     when 'presentee'
       @customer_activities = Activity.includes(:person).where(event_id: params[:id], attendance_type: 1).where('people.role_type = 1')
       @advisor_activities = Activity.includes(:person).where(event_id: params[:id], attendance_type: 1).where('people.role_type = 2')
+      @fixed_customer_activities = Activity.where(event_id: params[:id], attendance_type: 1).where(fixed_role_type: 1)
+      @fixed_advisor_activities = Activity.where(event_id: params[:id], attendance_type: 1).where(fixed_role_type: 2)
     when 'absentee'
       @customer_activities = Activity.includes(:person).where(event_id: params[:id], attendance_type: 2).where('people.role_type = 1')
       @advisor_activities = Activity.includes(:person).where(event_id: params[:id], attendance_type: 2).where('people.role_type = 2')
+      @fixed_customer_activities = Activity.where(event_id: params[:id], attendance_type: 2).where(fixed_role_type: 1)
+      @fixed_advisor_activities = Activity.where(event_id: params[:id], attendance_type: 2).where(fixed_role_type: 2)
     else
       @customer_activities = Activity.includes(:person).where(event_id: params[:id]).where('people.role_type = 1')
       @advisor_activities = Activity.includes(:person).where(event_id: params[:id]).where('people.role_type = 2')
+      @fixed_customer_activities = Activity.where(event_id: params[:id]).where(fixed_role_type: 1)
+      @fixed_advisor_activities = Activity.where(event_id: params[:id]).where(fixed_role_type: 2)
     end
     respond_to do |format|
       format.html
