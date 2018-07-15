@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:customer_show, :customer_edit, :customer_update, :customer_destroy, :advisor_show, :advisor_edit, :advisor_update, :advisor_destroy]
+  before_action :set_companies, only: [:customer_new, :customer_edit, :advisor_new, :advisor_edit]
   before_action :authenticate_admin!
 
   def customers_index
@@ -35,10 +36,18 @@ class PeopleController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def customer_show
-    @events = Event.includes(:activities).where(is_fixed: true).where('activities.person_id = ?', @customer.id).where('activities.attendance_type = 1').references(:activities)
-    if params[:event_date_gteq].present? || params[:event_date_lteq].present?
-      @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
-      @events = @q
+    if params[:who] != 'Others'
+      @events = Event.includes(:activities).where(is_fixed: true).where('activities.person_id = ?', @customer.id).where('activities.attendance_type = 1').references(:activities)
+      if params[:event_date_gteq].present? || params[:event_date_lteq].present?
+        @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
+        @events = @q
+      end
+    else
+      @events = Event.eager_load(:activities).eager_load(:people).where(is_fixed: true).where('people.company_id = ?', @customer.company_id).where('activities.attendance_type = 1')
+      if params[:event_date_gteq].present? || params[:event_date_lteq].present?
+        @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
+        @events = @q
+      end
     end
     respond_to do |format|
       format.html
@@ -64,9 +73,9 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @customer.save
         format.html { redirect_to new_customer_path, notice: 'データが新規作成されました。' }
-        format.json { render :show, status: :created, location: @customer }
+        format.json { render :customer_show, status: :created, location: @customer }
       else
-        format.html { render :new }
+        format.html { redirect_to new_customer_path }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
@@ -78,9 +87,9 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @customer.update(person_params)
         format.html { redirect_to customer_path, notice: 'データが更新されました。' }
-        format.json { render :show, status: :ok, location: @customer }
+        format.json { render :customer_show, status: :ok, location: @customer }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_customer_path }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
@@ -147,9 +156,9 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @advisor.save
         format.html { redirect_to new_advisor_path, notice: 'データが新規作成されました。' }
-        format.json { render :show, status: :created, location: @advisor }
+        format.json { render :advisor_show, status: :created, location: @advisor }
       else
-        format.html { render :new }
+        format.html { redirect_to new_advisor_path }
         format.json { render json: @advisor.errors, status: :unprocessable_entity }
       end
     end
@@ -161,9 +170,9 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @advisor.update(person_params)
         format.html { redirect_to advisor_path, notice: 'データが更新されました。' }
-        format.json { render :show, status: :ok, location: @advisor }
+        format.json { render :advisor_show, status: :ok, location: @advisor }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_advisor_path }
         format.json { render json: @advisor.errors, status: :unprocessable_entity }
       end
     end
@@ -184,6 +193,10 @@ class PeopleController < ApplicationController
     def set_person
       @customer = Person.find(params[:id])
       @advisor = Person.find(params[:id])
+    end
+
+    def set_companies
+      @companies = Company.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

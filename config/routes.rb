@@ -1,22 +1,11 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  resources :companies
   get 'top/index'
   get 'pages/index'
 
-  devise_for :admins, controllers: {
-    sessions:      'admins/sessions',
-    passwords:     'admins/passwords',
-    registrations: 'admins/registrations'
-  }
-  devise_scope :admin do
-    get 'admins', to: 'admins#index'
-    get 'admins/new', to: 'admins#new', as: 'new_admin'
-    post 'admins', to: 'admins#create'
-    get 'admins/:id', to: 'admins#show', as: 'admin'
-    get 'admins/edit/:id', to: 'admins#edit', as: 'edit_admin'
-    patch 'admins/:id', to: 'admins#update'
-    delete 'admins/:id', to: 'admins#destroy'
-  end
+  devise_for :admins
 
   get 'customers', to: 'people#customers_index', as: 'customers'
   get 'customers/new', to: 'people#customer_new', as: 'new_customer'
@@ -35,13 +24,14 @@ Rails.application.routes.draw do
   delete 'advisors/:id', to: 'people#advisor_destroy'
   post 'advisors/import', to: 'people#advisors_import', as: 'import_advisors'
 
+  resources :companies
+
   resources :events
   scope :events do
     get '/:id/fix', to: 'events#fix', as: 'fix_event'
   end
 
   resources :activities
-  resources :event_details
 
   root 'top#index'
 end

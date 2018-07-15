@@ -1,7 +1,7 @@
 tr.member_list
   - if f.object.person&.role_type == 2
     td = f.object.person.name
-    td = f.object.person.company_short_name
+    td = f.object.company&.short_name
     td = f.object.person.position
     td.row
       .field

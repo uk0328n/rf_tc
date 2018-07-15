@@ -7,7 +7,7 @@ CSV.generate(encoding: Encoding::SJIS, row_sep: "\r\n", force_quotes: true) do |
         '顧問先',
         customer.rank,
         customer.name,
-        customer.company_short_name,
+        customer.company&.short_name,
         customer.position
       ]
       csv << csv_column_values
@@ -17,7 +17,7 @@ CSV.generate(encoding: Encoding::SJIS, row_sep: "\r\n", force_quotes: true) do |
         '参加者',
         advisor.rank,
         advisor.name,
-        advisor.company_short_name,
+        advisor.company&.short_name,
         advisor.position
       ]
       csv << csv_column_values
@@ -28,7 +28,7 @@ CSV.generate(encoding: Encoding::SJIS, row_sep: "\r\n", force_quotes: true) do |
         '顧問先',
         customer.rank,
         customer.name,
-        customer.company_short_name,
+        customer.company&.short_name,
         customer.position
       ]
       csv << csv_column_values
@@ -38,7 +38,7 @@ CSV.generate(encoding: Encoding::SJIS, row_sep: "\r\n", force_quotes: true) do |
         '参加者',
         advisor.rank,
         advisor.name,
-        advisor.company_short_name,
+        advisor.company&.short_name,
         advisor.position
       ]
       csv << csv_column_values

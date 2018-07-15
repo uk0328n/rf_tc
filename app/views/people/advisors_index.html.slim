@@ -71,7 +71,7 @@ table.table.table-bordered.table-sm
           = link_to '編集', edit_advisor_path(a), class: 'btn btn-default btn-sm', role: 'button'
           = link_to '削除', advisor_path(a), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
         td = a.name
-        td = a.company_short_name
+        td = a.company&.short_name
         td = a.position
         td = Admin.find(a.editor_code).name
         td = a.updated_at.strftime("%Y/%m/%d %H:%M")

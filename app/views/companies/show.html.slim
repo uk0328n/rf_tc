@@ -1,0 +1,25 @@
+p#notice
+  = notice
+= link_to 'データ編集', edit_company_path(@company), class: 'btn btn-default'
+= link_to '一覧に戻る', companies_path, class: 'btn btn-default'
+h2 会社データ詳細
+.row
+  strong.col-5.col-md-2
+    | 会社名:
+  .col-5.col-md-3
+    = @company.name
+.row
+  strong.col-5.col-md-2
+    | 会社名カナ:
+  .col-5.col-md-3
+    = @company.kana
+.row
+  strong.col-5.col-md-2
+    | 会社略称:
+  .col-5.col-md-3
+    = @company.short_name
+.row
+  strong.col-5.col-md-2
+    | 会社略称カナ:
+  .col-5.col-md-3
+    = @company.short_name_kana

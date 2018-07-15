@@ -1,3 +1,14 @@
+- content_for :javascript
+  javascript:
+    document.addEventListener("DOMContentLoaded", function() {
+      AutoKana.bind("#name", "#kana")
+    });
+    document.addEventListener("change", function() {
+      document.getElementById('kana').value = document.getElementById('kana').value.replace(/[\u3041-\u3096]/g, function(match) {
+        var chr = match.charCodeAt(0) + 0x60
+        return String.fromCharCode(chr)
+      });
+    });
 = link_to '詳細表示', customer_path, class: 'btn btn-default'
 = link_to '一覧に戻る', customers_path, class: 'btn btn-default'
 h2 顧問先データ編集

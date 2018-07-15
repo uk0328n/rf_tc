@@ -60,6 +60,7 @@ ja:
         rank: 顧客レベル
         name: 氏名
         kana: フリガナ
+        company_id: 会社
         company: 会社
         company_short_name: 会社（略称）
         company_kana: 会社（カナ）
@@ -77,6 +78,11 @@ ja:
         contact_email: 担当者メールアドレス
         editor_code: 編集ユーザーID
         role_type: 顧客種別
+      company:
+        name: 会社名
+        kana: フリガナ
+        short_name: 会社名（略称）
+        short_name_kana: 略称フリガナ
       event:
         name: イベント名
         event_date: 開催日

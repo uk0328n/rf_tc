@@ -13,10 +13,14 @@ CSV.generate(encoding: Encoding::SJIS, row_sep: "\r\n", force_quotes: true) do |
             :invalid => :replace,
             :undef   => :replace,
             :replace => "〓"}),
-        advisor.company_short_name.encode!(Encoding::CP932, {
-            :invalid => :replace,
-            :undef   => :replace,
-            :replace => "〓"}),
+        if advisor.company.blank?
+          ""
+        else
+          advisor.company&.short_name.encode!(Encoding::CP932, {
+              :invalid => :replace,
+              :undef   => :replace,
+              :replace => "〓"})
+        end,
         advisor.position.encode!(Encoding::CP932, {
             :invalid => :replace,
             :undef   => :replace,

@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Devise for authentication
 gem 'devise'
 gem 'omniauth-twitter'
+gem 'rails_admin'
 # Use Slim as template engine
 gem 'slim-rails'
 gem 'rails-i18n'

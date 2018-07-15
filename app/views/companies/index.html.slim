@@ -29,49 +29,42 @@
         }
       }
     }
-h2 顧問先一覧
+h2 会社一覧
 br
 table.table.table-borderless.table-sm
   tr
     td
-      = link_to '新規作成', new_customer_path, class: 'btn btn-default btn-sm', role: 'button'
+      = link_to '新規作成', new_company_path, class: 'btn btn-default btn-sm', role: 'button'
       | 　
-      = link_to "CSV出力", customers_path(@customers, q: params[:q], format: :csv), class: "btn btn-default btn-sm", role: 'button'
-    td
-      = form_tag({controller: :people, action: :customers_import, method: :post}, {multipart: true}) do
+      = link_to "CSV出力", companies_path(@companies, format: :csv), class: "btn btn-default btn-sm", role: 'button'
+    /td
+      = form_tag({controller: :companies, action: :companies_import, method: :post}, {multipart: true}) do
         = file_field_tag :file
         = submit_tag "CSVアップロード", class: 'btn btn-default btn-sm'
 = text_field_tag 'keyword'
 = submit_tag "検索", :onclick => "searchword()", :class => "btn btn-default"
 br
 br
-ul.nav.nav-tabs
-  li.nav-item
-    = link_to 'すべて', customers_path
-  li.nav-item
-    = link_to '顧客ランク1', customers_path(q: 1)
-  li.nav-item
-    = link_to '顧客ランク2', customers_path(q: 2)
-  li.nav-item
-    = link_to '顧客ランク3', customers_path(q: 3)
 table.table.table-bordered.table-sm
   thead.thread-light
     tr
       th.col-12.col-md-2
-      th.col-12.col-md-2 氏名
-      th.col-12.col-md-2 会社名（略称）
-      th.col-12.col-md-2 役職
+      th.col-12.col-md-2 会社名
+      th.col-12.col-md-2 会社名カナ
+      th.col-12.col-md-2 会社略称
+      th.col-12.col-md-2 会社略称カナ
       th.col-12.col-md-2 編集ユーザー
       th.col-12.col-md-2 最終更新日時
   tbody
-    - @customers.each do |c|
+    - @companies.each do |c|
       tr.member_list
         td
-          = link_to '詳細', customer_path(c), class: 'btn btn-default btn-sm', role: 'button'
-          = link_to '編集', edit_customer_path(c), class: 'btn btn-default btn-sm', role: 'button'
-          = link_to '削除', customer_path(c), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '詳細', company_path(c), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '編集', edit_company_path(c), class: 'btn btn-default btn-sm', role: 'button'
+          = link_to '削除', company_path(c), method: :delete, data: { confirm: '削除してもよろしいですか？' }, class: 'btn btn-default btn-sm', role: 'button'
         td = c.name
-        td = c.company&.short_name
-        td = c.position
+        td = c.kana
+        td = c.short_name
+        td = c.short_name_kana
         td = Admin.find(c.editor_code).name
         td = c.updated_at.strftime("%Y/%m/%d %H:%M")

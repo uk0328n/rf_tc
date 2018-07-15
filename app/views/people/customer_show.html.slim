@@ -18,24 +18,29 @@
         = @customer.name
     .row
       strong.col-12.col-md-5
-        | フリガナ:
+        | 氏名カナ:
       .col-12.col-md-7
         = @customer.kana
     .row
       strong.col-12.col-md-5
-        | 会社:
+        | 会社名:
       .col-12.col-md-7
-        = @customer.company
+        = @customer.company&.name
     .row
       strong.col-12.col-md-5
-        | 会社（略称）:
+        | 会社名カナ:
       .col-12.col-md-7
-        = @customer.company_short_name
+        = @customer.company&.kana
     .row
       strong.col-12.col-md-5
-        | 会社（カナ）:
+        | 会社略称:
       .col-12.col-md-7
-        = @customer.company_kana
+        = @customer.company&.short_name
+    .row
+      strong.col-12.col-md-5
+        | 会社略称カナ:
+      .col-12.col-md-7
+        = @customer.company&.short_name_kana
     .row
       strong.col-12.col-md-5
         | 役職:
@@ -103,6 +108,10 @@
   .col-12.col-lg-8
     .row
       = form_tag customer_path(@customer), method: :get do
+        - if params[:who] == 'Others'
+          = hidden_field_tag :who, 'Others'
+        - elsif params[:who] == 'I'
+          = hidden_field_tag :who, 'I'
         .col-md-1
           h5
             strong 期間
@@ -114,25 +123,33 @@
         .col-md-4
           = submit_tag "検索", class: "btn btn-default", role: 'button'
           = link_to 'クリア', customer_path(@customer), class: "btn btn-default", role: 'button'
-          = link_to "CSV出力", customer_path(@customer, event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq], format: :csv), class: "btn btn-default", role: 'button'
-    h2 参加者リスト
+          = link_to "CSV出力", customer_path(@customer, who: params[:who], event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq], format: :csv), class: "btn btn-default", role: 'button'
+    - if params[:who] == 'Others'
+      h2 参加者リスト（会社）
+    - else
+      h2 参加者リスト（自分）
+    ul.nav.nav-tabs
+      li.nav-item
+        = link_to '自分', customer_path(params[:id], who: 'I')
+      li.nav-item
+        = link_to '会社', customer_path(params[:id], who: 'Others')
+    br
     - @events.each do |event|
-      - if event.activities.where(attendance_type: 1).count >= 1
-        .row
-          .col-12.col-md-6
-            strong イベント名:　
-            = event.name
-          .col-12.col-md-6
-            strong 開催日:　
-            = event.event_date
-        table.table.table-bordered.table-sm
-          thead.thread-light
+      .row
+        .col-12.col-md-6
+          strong イベント名:　
+          = event.name
+        .col-12.col-md-6
+          strong 開催日:　
+          = event.event_date
+      table.table.table-bordered.table-sm
+        thead.thread-light
+          tr
+            th.col-12.col-md-2 氏名
+            th.col-12.col-md-2 会社名
+            th.col-12.col-md-2 役職
+          - event.people.includes(:activities).where('activities.fixed_role_type = 2').where.not('activities.person_id = ?', @customer.id).where('activities.attendance_type = 1').each do |advisor|
             tr
-              th.col-12.col-md-2 氏名
-              th.col-12.col-md-2 会社名
-              th.col-12.col-md-2 役職
-            - event.people.includes(:activities).where('activities.fixed_role_type = 2').where.not('activities.person_id = ?', @customer.id).where('activities.attendance_type = 1').each do |advisor|
-              tr
-                td.col-12.col-md-2 = advisor.name
-                td.col-12.col-md-2 = advisor.company_short_name
-                td.col-12.col-md-2 = advisor.position
+              td.col-12.col-md-2 = advisor.name
+              td.col-12.col-md-2 = advisor.company_short_name
+              td.col-12.col-md-2 = advisor.position

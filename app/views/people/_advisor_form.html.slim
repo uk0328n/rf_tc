@@ -27,14 +27,8 @@
   = form.label :kana, 'フリガナ', class: 'col-5 col-md-2'
   = form.text_field :kana, class: 'col-5 col-md-3', id: 'kana', value: @advisor.kana
 .field.row
-  = form.label :company, '会社', class: 'col-5 col-md-2'
-  = form.text_field :company, class: 'col-5 col-md-3', value: @advisor.company
-.field.row
-  = form.label :company_short_name, '会社（略称）', class: 'col-5 col-md-2'
-  = form.text_field :company_short_name, class: 'col-5 col-md-3', value: @advisor.company_short_name
-.field.row
-  = form.label :company_kana, '会社（カナ）', class: 'col-5 col-md-2'
-  = form.text_field :company_kana, class: 'col-5 col-md-3', value: @advisor.company_kana
+  = form.label :company_id, '会社', class: 'col-5 col-md-2'
+  = form.select :company_id, @companies.map{|t| [t.name, t.id]}, class: 'col-5 col-md-3', selected: @advisor.company_id
 .field.row
   = form.label :position, '役職', class: 'col-5 col-md-2'
   = form.text_field :position, class: 'col-5 col-md-3', value: @advisor.position
