@@ -9,7 +9,7 @@ class TopController < ApplicationController
         redirect_to pages_index_path
       end
     else
-      redirect_to admin_session_path
+      redirect_to new_admin_session_path
     end
   end
 
