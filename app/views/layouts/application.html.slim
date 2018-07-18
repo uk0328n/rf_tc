@@ -13,7 +13,7 @@ html
   body
     .container
       h4.col-md-11 TopConnect名簿管理システム
-      - if current_admin.role_type == 1
+      - if current_admin&.role_type == 1
         = link_to 'ユーザー管理', '/admin/admin', class: 'btn btn-default btn-xs col-md-1'
       br
       br

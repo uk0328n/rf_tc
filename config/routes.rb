@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :companies
   get 'top/index'
   get 'pages/index'
 
   devise_for :admins
+  
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get 'customers', to: 'people#customers_index', as: 'customers'
   get 'customers/new', to: 'people#customer_new', as: 'new_customer'

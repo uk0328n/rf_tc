@@ -1,12 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
-  #before_filterを設定
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_current_admin
+  before_action :admin_logged_in?
 
   def set_current_admin
     Thread.current[:admin] = current_admin
+  end
+
+  def admin_logged_in?
+    unless current_admin.present?
+      unless request.path == '/admins/sign_in'
+        redirect_to new_admin_session_path
+      end
+    end
   end
 
   protected
