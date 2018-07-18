@@ -43,7 +43,11 @@ class PeopleController < ApplicationController
         @events = @q
       end
     else
-      @events = Event.eager_load(:activities).eager_load(:people).where(is_fixed: true).where('people.company_id = ?', @customer.company_id).where('activities.attendance_type = 1')
+      person_ids = []
+      person_ids = Person.where(company_id: @customer.company_id).all.ids
+      event_ids = []
+      event_ids = Activity.where(person_id: person_ids, attendance_type: 1).all.pluck(:event_id)
+      @events = Event.where(is_fixed: true, id: event_ids)
       if params[:event_date_gteq].present? || params[:event_date_lteq].present?
         @q = @events.where('event_date >= :event_date_gteq AND event_date <= :event_date_lteq', event_date_gteq: params[:event_date_gteq], event_date_lteq: params[:event_date_lteq])
         @events = @q
