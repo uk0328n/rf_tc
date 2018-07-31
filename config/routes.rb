@@ -4,8 +4,16 @@ Rails.application.routes.draw do
   get 'pages/index'
 
   devise_for :admins
-  
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_scope :admin do
+    get 'admins', to: 'admins#index'
+    get 'admins/new', to: 'admins#new', as: 'new_admin'
+    post 'admins', to: 'admins#create'
+    get 'admins/:id', to: 'admins#show', as: 'admin'
+    get 'admins/edit/:id', to: 'admins#edit', as: 'edit_admin'
+    patch 'admins/:id', to: 'admins#update'
+    delete 'admins/:id', to: 'admins#destroy'
+  end
+  # mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get 'customers', to: 'people#customers_index', as: 'customers'
   get 'customers/new', to: 'people#customer_new', as: 'new_customer'
