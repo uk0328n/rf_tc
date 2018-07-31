@@ -2,7 +2,7 @@ class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :registerable, :recoverable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable, :trackable, :validatable, :authentication_keys => [:username]
-  validates :username, :name, :role_type, :password, presence: true
+  validates :username, :name, :role_type, presence: true
   #usernameを必須とする
   validates_uniqueness_of :username
   # validates_presence_of :username
