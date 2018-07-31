@@ -21,11 +21,11 @@
     .field.row
       = label_tag :change_password, "パスワードを変更する", class: 'col-5 col-md-2'
       = check_box_tag :change_password
-    .field.row
-      = form.label :password, class: 'col-5 col-md-2'
-      = form.password_field :password, class: 'col-5 col-md-3', autocomplete: "off"
-    .field.row
-      = form.label :password_confirmation, class: 'col-5 col-md-2'
-      = form.password_field :password_confirmation, class: 'col-5 col-md-3', autocomplete: "off"
+  .field.row
+    = form.label :password, class: 'col-5 col-md-2'
+    = form.password_field :password, class: 'col-5 col-md-3', autocomplete: "off"
+  .field.row
+    = form.label :password_confirmation, class: 'col-5 col-md-2'
+    = form.password_field :password_confirmation, class: 'col-5 col-md-3', autocomplete: "off"
   .actions.row
     = form.submit class: 'btn btn-default'
