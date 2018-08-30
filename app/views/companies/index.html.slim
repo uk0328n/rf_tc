@@ -37,8 +37,8 @@ table.table.table-borderless.table-sm
       = link_to '新規作成', new_company_path, class: 'btn btn-default btn-sm', role: 'button'
       | 　
       = link_to "CSV出力", companies_path(@companies, format: :csv), class: "btn btn-default btn-sm", role: 'button'
-    /td
-      = form_tag({controller: :companies, action: :companies_import, method: :post}, {multipart: true}) do
+    td
+      = form_tag({controller: :companies, action: :import, method: :post}, {multipart: true}) do
         = file_field_tag :file
         = submit_tag "CSVアップロード", class: 'btn btn-default btn-sm'
 = text_field_tag 'keyword'

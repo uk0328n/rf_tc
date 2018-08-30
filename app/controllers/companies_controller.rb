@@ -13,6 +13,13 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def import
+    if params[:file].present?
+      Company.simple_import(params[:file].path, ',')
+    end
+    redirect_to companies_url
+  end
+
   # GET /companies/1
   # GET /companies/1.json
   def show

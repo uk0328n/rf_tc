@@ -33,7 +33,10 @@ Rails.application.routes.draw do
   post 'advisors/import', to: 'people#advisors_import', as: 'import_advisors'
 
   resources :companies
-
+  scope :companies do
+    post 'companies/import', to: 'companies#import', as: 'import_companies'
+  end
+  
   resources :events
   scope :events do
     get '/:id/fix', to: 'events#fix', as: 'fix_event'
