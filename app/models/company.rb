@@ -7,10 +7,10 @@ class Company < ApplicationRecord
   before_validation :set_short_name
 
   def set_short_name
-    if self.short_name.empty?
+    if self.short_name.blank?
       self.short_name = self.name
     end
-    if self.short_name_kana.empty?
+    if self.short_name_kana.blank?
       self.short_name_kana = self.kana
     end
   end
